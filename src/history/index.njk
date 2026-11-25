@@ -1,0 +1,75 @@
+---
+layout: layouts/base.njk
+title: Team History
+permalink: /history/
+bodyClass: history-page
+---
+{% set openingFound = false %}
+{% set openingSrc = "" %}
+{% set openingAlt = "" %}
+{% set openingCaption = "" %}
+{% set openingWidth = 0 %}
+{% set openingHeight = 0 %}
+{% for chapter in history.chapters %}
+  {% for block in chapter.blocks %}
+    {% if not openingFound and block.type == "figure" and block.src == "/assets/images/history/woodlawn.jpg" %}
+      {% set openingFound = true %}
+      {% set openingSrc = block.src %}
+      {% set openingAlt = block.alt %}
+      {% set openingCaption = block.caption %}
+      {% set openingWidth = block.width %}
+      {% set openingHeight = block.height %}
+    {% endif %}
+  {% endfor %}
+{% endfor %}
+<article class="page">
+  <header class="page-header history-opening">
+    <div class="history-opening-copy">
+      <p class="eyebrow">ALUMNI & HISTORY</p>
+      <h1>Team history.</h1>
+      <nav class="history-nav" aria-label="History chapters">
+        {% for chapter in history.chapters %}
+          <a href="#{{ chapter.id }}">{{ chapter.title }}</a>
+        {% endfor %}
+      </nav>
+    </div>
+    {% if openingFound %}
+      <figure class="history-opening-photo">
+        <img src="{{ openingSrc }}" width="{{ openingWidth }}" height="{{ openingHeight }}" alt="{{ openingAlt }}">
+        {% if openingCaption %}<figcaption>{{ openingCaption }}</figcaption>{% endif %}
+      </figure>
+    {% endif %}
+  </header>
+  {% set openingShown = false %}
+  {% for chapter in history.chapters %}
+    <section class="history-chapter" id="{{ chapter.id }}" aria-labelledby="history-{{ chapter.id }}">
+      <h2 id="history-{{ chapter.id }}">{{ chapter.title }}</h2>
+      <div class="history-prose">
+        {% for block in chapter.blocks %}
+          {% if openingFound and not openingShown and block.type == "figure" and block.src == openingSrc %}
+            {% set openingShown = true %}
+          {% elif block.type == "h3" %}
+            <h3>{{ block.text }}</h3>
+          {% elif block.type == "h4" %}
+            <h4>{{ block.text }}</h4>
+          {% elif block.type == "quote" %}
+            <blockquote><p>{{ block.text }}</p></blockquote>
+          {% elif block.type == "figure" %}
+            <figure class="history-figure">
+              <img src="{{ block.src }}" width="{{ block.width }}" height="{{ block.height }}" alt="{{ block.alt }}" loading="lazy" decoding="async">
+              {% if block.captionRuns %}
+                <figcaption>{% for run in block.captionRuns %}{% if run.href %}<a href="{{ run.href }}">{{ run.text }}</a>{% else %}{{ run.text }}{% endif %}{% endfor %}</figcaption>
+              {% elif block.caption %}
+                <figcaption>{{ block.caption }}</figcaption>
+              {% endif %}
+            </figure>
+          {% elif block.runs %}
+            <p>{% for run in block.runs %}{% if run.href %}<a href="{{ run.href }}">{{ run.text }}</a>{% else %}{{ run.text }}{% endif %}{% endfor %}</p>
+          {% else %}
+            <p>{{ block.text }}</p>
+          {% endif %}
+        {% endfor %}
+      </div>
+    </section>
+  {% endfor %}
+</article>

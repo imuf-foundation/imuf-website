@@ -1,0 +1,52 @@
+---
+layout: layouts/base.njk
+title: Home
+navId: home
+bodyClass: home-page
+---
+{% from "macros.njk" import photo %}
+<section class="home-hero" aria-labelledby="home-title">
+  <p class="hero-location">BLOOMINGTON, IN</p>
+  <div class="hero-composition">
+    <p class="hero-university">INDIANA UNIVERSITY</p>
+    <h1 id="home-title" class="hero-title"><span>INDIANA</span><span>ULTIMATE</span></h1>
+    <p class="hero-tagline">Home of the HoosierMama?s.</p>
+    <div class="hero-actions"><a class="button button-white" href="/team/#join-the-team">Join the team</a><a class="hero-hub-link" href="/team/">Explore the Team Hub</a></div>
+  </div>
+  <span class="hero-orbit" aria-hidden="true"></span>
+  <img class="hero-player" src="/assets/images/quigs-cutout-v1.webp" width="1024" height="1536" alt="Quigs reaching high to catch a disc in a black Indiana jersey" fetchpriority="high">
+</section>
+
+<section class="ed-recruit" aria-labelledby="ed-recruit-title">
+  <div class="ed-recruit-shell">
+    <figure class="ed-lucas"><img src="/assets/images/lucas-editorial-v3-1536.webp" srcset="/assets/images/lucas-editorial-v3-640.webp 640w, /assets/images/lucas-editorial-v3-960.webp 960w, /assets/images/lucas-editorial-v3-1536.webp 1536w" sizes="(max-width: 900px) 100vw, 64vw" width="1536" height="1024" alt="Lucas celebrating with arms spread and the disc held high, in a monochrome motion treatment" loading="lazy" decoding="async"></figure>
+    <div class="ed-recruit-intro"><h2 id="ed-recruit-title"><span>Play for</span>Indiana.</h2><div class="ed-recruit-actions"><a class="ed-link" href="/team/#join-the-team">Join the team</a><a class="ed-link ed-link-secondary" href="/team/player-resources/#basics">New to ultimate?</a></div></div>
+  </div>
+</section>
+
+<section class="ed-hub" aria-labelledby="ed-hub-title">
+  <div class="ed-hub-main">
+    <div class="ed-hub-copy"><h2 id="ed-hub-title">Your team.<br>All here.</h2><a class="ed-link ed-link-light ed-hub-entry" href="/team/">Explore the Team Hub</a>
+      <nav class="ed-hub-nav" aria-label="Team resources"><a href="/team/roster/">Mama's Roster</a><a href="/team/schedule/">Season Schedule</a><a href="/team/player-resources/">Player Resources</a><a href="/team/#practices">Practices &amp; Leadership</a></nav>
+    </div>
+    <figure class="ed-hub-art"><img class="ed-steppa" src="/assets/images/steppa-editorial-v2-1122.webp" srcset="/assets/images/steppa-editorial-v2-640.webp 640w, /assets/images/steppa-editorial-v2-960.webp 960w, /assets/images/steppa-editorial-v2-1122.webp 1122w" sizes="(max-width: 900px) 100vw, 58vw" width="1122" height="1402" alt="Steppa reaching for the disc in his red number 2 jersey against a monochrome field" loading="lazy" decoding="async"></figure>
+  </div>
+</section>
+
+<section class="ed-foundation" aria-labelledby="ed-foundation-title">
+  <div class="ed-foundation-top"><img class="ed-foundation-mark" src="/assets/images/imuf-logo.webp" width="1000" height="170" alt="Indiana Men's Ultimate Foundation" loading="lazy"><h2 id="ed-foundation-title">More than a season.</h2></div>
+  <div class="ed-foundation-photos">
+    <figure class="ed-foundation-image">{{ photo('dsc07017','David, Evan and Rowland standing shoulder to shoulder in red Indiana jerseys','','(max-width: 900px) 100vw, 46vw') }}</figure>
+    <figure class="ed-foundation-detail">{{ photo('dsc01536','David talking with coaches beside the field','','(max-width: 900px) 100vw, 46vw') }}</figure>
+  </div>
+  <div class="ed-foundation-copy"><p>For everyone who has worn the jersey. And everyone who helps the next team take the field.</p><p>Stay connected through IMUF, our community of alumni and supporters.</p></div>
+  <nav class="ed-foundation-nav" aria-label="Alumni and foundation"><a href="/about-imuf/">Meet the foundation</a><a href="/history/">Team history</a><a href="/scholarships/mike-moore/">Mike Moore Scholarship</a><a class="ed-donate" href="/donate-now/">Support the team</a></nav>
+</section>
+
+<section class="ed-archive" aria-labelledby="ed-archive-title">
+  <div class="ed-archive-layout">
+    <h2 id="ed-archive-title" class="ed-archive-heading"><span>Leave it all</span><span>out on the field.</span></h2>
+    <div class="ed-archive-art"><img class="ed-collin" src="/assets/images/collin-editorial-v3-1672.webp" srcset="/assets/images/collin-editorial-v3-640.webp 640w, /assets/images/collin-editorial-v3-960.webp 960w, /assets/images/collin-editorial-v3-1672.webp 1672w" sizes="(max-width: 900px) 100vw, 90vw" width="1672" height="941" alt="Collin laying out for the disc, in a cinematic field treatment" loading="lazy" decoding="async"></div>
+    <a class="ed-link ed-link-light ed-archive-action" href="/videos/">Browse Callahan Films &amp; Highlights</a>
+  </div>
+</section>

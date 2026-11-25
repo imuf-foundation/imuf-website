@@ -1,0 +1,21 @@
+---
+pagination:
+  data: redirects
+  size: 1
+  alias: redirect
+permalink: "{{ redirect.from }}"
+---
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="robots" content="noindex, nofollow">
+<meta http-equiv="refresh" content="0; url={{ redirect.to }}">
+<link rel="canonical" href="{{ redirect.to }}">
+<title>{{ redirect.label }} · Indiana Men's Ultimate</title>
+</head>
+<body>
+<h1>{{ redirect.label }}</h1>
+<p><a href="{{ redirect.to }}">Continue</a></p>
+</body>
+</html>

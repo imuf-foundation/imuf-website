@@ -1,0 +1,35 @@
+---
+layout: layouts/base.njk
+title: Season Schedule
+navId: schedule
+permalink: /team/schedule/
+---
+{% from "macros.njk" import photo %}
+<article class="page">
+  <header class="page-header">
+    <p class="eyebrow">THE TEAM / THE SEASON</p>
+    <h1>What's next.</h1>
+    <p class="lede">Tournament weekends and the season ahead.{% if schedule.season %} {{ schedule.season }}{% endif %}</p>
+  </header>
+  <div class="split-content">
+    <div>
+      {% if schedule.events and schedule.events.length %}
+        <ul class="stack-list">
+          {% for event in schedule.events %}
+            <li>
+              <h3>{{ event.name }}</h3>
+              {% if event.date %}<p>{{ event.date }}</p>{% endif %}
+              {% if event.location %}<p>{{ event.location }}</p>{% endif %}
+              {% if event.note %}<p>{{ event.note }}</p>{% endif %}
+            </li>
+          {% endfor %}
+        </ul>
+      {% else %}
+        <h2>The schedule has not been posted.</h2>
+        <p class="content-pending">Dates and locations will be listed here when the team adds them.</p>
+      {% endif %}
+      <a class="text-link" href="/team/player-resources/#tournaments">Tournament preparation</a>
+    </div>
+    {{ photo('dsc05827','An Indiana player reaching above a defender to catch a disc') }}
+  </div>
+</article>

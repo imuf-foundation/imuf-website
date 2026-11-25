@@ -1,0 +1,219 @@
+{
+  "build": "Eleventy 3.1.7; 13 routes; passed",
+  "static_audit": "Internal destinations, fragments, h1 counts and image attributes passed",
+  "validation_regressions": "10 isolated fixture cases passed in an earlier revision; not repeated for this Home-only design change",
+  "browser": "Chromium",
+  "desktop_css_width": 1363,
+  "narrow_css_widths": [
+    454,
+    340
+  ],
+  "narrow_method": "Browser zoom; not device emulation",
+  "interactions": [
+    "Existing route destinations retained in source",
+    "Newsletter remains disabled pending ActiveCampaign connection"
+  ],
+  "not_tested": [
+    "Safari",
+    "physical iPhone",
+    "JavaScript blocked/disabled in browser",
+    "Hosted Pages CMS",
+    "GitHub organization",
+    "Netlify auto-publish",
+    "Donation checkout completion",
+    "Newsletter signup embed"
+  ],
+  "revision": "20",
+  "navigation": "Compact dark header; four visible categories; child links use native details dropdowns. Mobile dropdown uses the category-nav width.",
+  "visual_review": [
+    "Generated treatments restored with local detail corrections; desktop native screenshots reviewed before interruption",
+    "Lucas copy beside athlete; headline raised 40px after observed hand overlap",
+    "Foundation uses original trio and coaches photos with distinct heading and grouped links",
+    "Archive split heading and requested CTA/descriptor placement",
+    "No horizontal overflow observed at 1363,454,340 CSS px"
+  ],
+  "copy_audit": "Visible team name uses HoosierMama?s; real external URL spellings preserved. No For the players / From the archive labels.",
+  "narrow_routes": [
+    "/"
+  ],
+  "horizontal_overflow_check": "1363,454,340 CSS px passed before interruption; browser zoom, not device emulation",
+  "newsletter": "Home-only visual field; disabled Subscribe with accessible connection-pending label; no form action, collection or storage. ActiveCampaign form required.",
+  "image_rendering": "All image elements loaded during Chromium inspection; generated details remain subject to visual approval",
+  "scope": "Home-only desktop CSS above 700px; existing mobile rules, images, content, and other pages preserved",
+  "mobile_review": {
+    "method": "Chromium iframe viewports at 390 \u00d7 800 and 320 \u00d7 800 CSS px; native screenshots",
+    "overflow": "None at either width",
+    "390_section_heights_px": {
+      "hero": 560,
+      "recruitment": 545,
+      "team_hub": 415,
+      "foundation": 792,
+      "archive": 459
+    },
+    "fixes": [
+      "Hero player clears copy and both CTAs",
+      "Phone-specific heading sizes and image proportions",
+      "Team resources arranged in two columns below artwork",
+      "Foundation heading line break restored; smaller typography and coaches inset",
+      "Archive caption and footer remain in document flow; newsletter input 16px"
+    ],
+    "limitations": [
+      "Not physical iOS Safari",
+      "Foundation content intentionally remains taller than short phone viewports to preserve readability"
+    ]
+  },
+  "mobile_header_refinement": {
+    "widths": [
+      320,
+      390
+    ],
+    "checks": [
+      "All four categories have identical top position; no dots; no horizontal overflow",
+      "Team dropdown opens at 320px and stays inside viewport",
+      "Hero reduced to 500px / 460px; lettering above player layer; face visible",
+      "Original coaches photo enlarged to section width with CSS edge fade; no image generation"
+    ],
+    "scope": "Home-only CSS media queries at 700px and below; desktop and other pages unchanged",
+    "not_tested": [
+      "Physical iPhone",
+      "Safari"
+    ]
+  },
+  "mobile_composition": {
+    "widths": [
+      320,
+      390
+    ],
+    "overflow": "None observed",
+    "hero": "Title font sizes retained; Quigs hand/disc above heading, player layered over right edge of heading",
+    "hub": "Artwork 375px wide at 390px iframe (15px scrollbar); 465px tall; full field effect, shifted right to clear headline; links over darkened lower field",
+    "foundation": "Original photos grouped in overlapping spread before copy and link group; white fade removed",
+    "unchanged": "Lucas, Collin, desktop styles and other pages",
+    "limitations": [
+      "Physical iPhone",
+      "Safari"
+    ]
+  },
+  "mobile_refinement": {
+    "widths": [
+      320,
+      390
+    ],
+    "checks": [
+      "No horizontal overflow at either width",
+      "Hero subtitle directly beneath heading, away from CTA row",
+      "Steppa art top shifted down 32px; link layout retained",
+      "Coaches original crop enlarged 1.3\u00d7 with top anchor retaining faces; no overlap frames",
+      "Foundation body text 16px; exactly four visible links in consistent 2-column grid",
+      "Archive art moved 28px closer to heading",
+      "Footer wordmark reduced to 44px; newsletter field unchanged"
+    ],
+    "scope": "Home mobile only; desktop appearance and other pages retained",
+    "not_tested": [
+      "Safari",
+      "physical iPhone"
+    ]
+  },
+  "desktop_review": {
+    "widths_css_px": [
+      1363,
+      1090
+    ],
+    "method": "Chromium, narrower laptop check using browser zoom",
+    "checks": [
+      "No horizontal overflow at either width",
+      "All image elements loaded at 1363px",
+      "Hero disc above title; team line beneath title",
+      "Header categories on one row without dots",
+      "Steppa full figure in enlarged field feature, four resource links in one row",
+      "Coaches and trio photographs aligned, faces visible, one link group",
+      "Archive image closer to heading; quieter footer wordmark"
+    ],
+    "scope": "Only additional CSS under min-width:701px; revision 15 mobile rules preserved; source templates, JSON and assets unchanged",
+    "not_tested": [
+      "Safari",
+      "physical laptop Safari"
+    ]
+  },
+  "revision_17": {
+    "checks": [
+      "Chromium 1363px and 1090px: no horizontal overflow",
+      "Hero player larger than r16, top inset 32px; title/subtitle group centered vertically",
+      "Recruitment paragraph removed",
+      "Team Hub links beneath heading in left-side blank space",
+      "Larger foundation logo; heading single line on desktop",
+      "Archive heading unified; CTA and descriptor adjacent",
+      "Home CSS version query v=17 added"
+    ],
+    "limitations": [
+      "Safari and physical iPhone not tested"
+    ],
+    "scope": "Home templates/CSS; other pages and public site unchanged"
+  },
+  "revision_18": {
+    "checks": [
+      "Recruitment links share exact left coordinate with heading at 1363px and 1090px",
+      "Links below extended hand with clearance",
+      "Narrow laptop heading raised to avoid hand",
+      "Archive CTA replaced with Browse Callahan Films & Highlights; redundant descriptor removed",
+      "No horizontal overflow at 1363/1090"
+    ],
+    "scope": "Home recruitment desktop layout, archive CTA copy, stylesheet version v18",
+    "limitations": [
+      "Safari",
+      "physical iPhone"
+    ]
+  },
+  "revision_19": {
+    "checks": [
+      "Hero title/subtitle spacing increased from 20px to 38px",
+      "Recruitment action rows enlarged with full-width separators beneath hand",
+      "1363px/1090px Chromium no horizontal overflow"
+    ],
+    "scope": "Desktop Home CSS; mobile and all source images unchanged",
+    "not_tested": [
+      "Safari"
+    ]
+  },
+  "revision_20": {
+    "method": "Chromium iframe viewports; native visual review",
+    "viewports_css_px": [
+      [
+        1280,
+        720
+      ],
+      [
+        1280,
+        600
+      ]
+    ],
+    "horizontal_overflow": false,
+    "header_plus_hero_height_px": [
+      720,
+      600
+    ],
+    "section_heights_at_720_px": {
+      "recruitment": 662,
+      "team_hub": 677,
+      "foundation": 546,
+      "archive": 677
+    },
+    "section_heights_at_600_px": {
+      "recruitment": 552,
+      "team_hub": 564,
+      "foundation": 501,
+      "archive": 564
+    },
+    "checks": [
+      "Header plus complete hero fits viewport, including title, player, subtitle and CTAs",
+      "Recruitment, team resources, foundation and archive each shorter than viewport",
+      "Foundation crop top-anchored to retain faces",
+      "Build and content validation passed"
+    ],
+    "not_tested": [
+      "Safari",
+      "physical laptop Safari",
+      "mobile recheck; existing mobile CSS unchanged"
+    ]
+  }
+}

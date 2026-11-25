@@ -1,0 +1,25 @@
+---
+layout: layouts/base.njk
+title: IMUF Board
+permalink: /imuf-board/
+bodyClass: support-page board-page
+---
+<article class="page">
+  <header class="page-header">
+    <p class="eyebrow">THE FOUNDATION</p>
+    <h1>IMUF board.</h1>
+  </header>
+  {% if board.members and board.members.length %}
+    <ul class="board-list support-section">
+      {% for member in board.members %}
+        <li>
+          <h2>{{ member.name }}</h2>
+          <p>{{ member.role }}{% if member.classYear %} · Class of {{ member.classYear }}{% endif %}</p>
+        </li>
+      {% endfor %}
+    </ul>
+  {% else %}
+    <p class="support-prose support-section">Board members have not been listed yet.</p>
+  {% endif %}
+  <a class="text-link support-links" href="/contact-us/">Contact IMUF</a>
+</article>

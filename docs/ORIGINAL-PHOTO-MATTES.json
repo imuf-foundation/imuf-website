@@ -1,0 +1,47 @@
+{
+  "lucas": {
+    "original": "DSC04594.jpg",
+    "file": "lucas-original-cutout-v1.webp",
+    "size": [
+      935,
+      1098
+    ],
+    "source_crop": [
+      998,
+      235,
+      1933,
+      1333
+    ],
+    "foreground_RGB_equals_source_at_opaque_pixels": true
+  },
+  "collin": {
+    "original": "DSC01779.jpg",
+    "file": "collin-original-cutout-v1.webp",
+    "size": [
+      1881,
+      740
+    ],
+    "source_crop": [
+      679,
+      839,
+      2560,
+      1579
+    ],
+    "foreground_RGB_equals_source_at_opaque_pixels": true
+  },
+  "steppa": {
+    "original": "DSC03145.jpg",
+    "file": "steppa-original-cutout-v1.webp",
+    "size": [
+      1067,
+      2272
+    ],
+    "source_crop": [
+      1329,
+      270,
+      2396,
+      2542
+    ],
+    "foreground_RGB_equals_source_at_opaque_pixels": true
+  }
+}

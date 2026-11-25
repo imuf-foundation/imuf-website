@@ -1,0 +1,16 @@
+{
+  "name": "imuf-website",
+  "private": true,
+  "type": "module",
+  "engines": {
+    "node": ">=24 <25"
+  },
+  "scripts": {
+    "validate": "node scripts/validate-content.mjs",
+    "build": "npm run validate && eleventy",
+    "dev": "npm run validate && eleventy --serve"
+  },
+  "devDependencies": {
+    "@11ty/eleventy": "3.1.7"
+  }
+}

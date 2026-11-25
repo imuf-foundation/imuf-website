@@ -1,0 +1,10 @@
+---
+layout: layouts/base.njk
+title: Mama's Roster
+navId: roster
+permalink: /team/roster/
+---
+{% from "macros.njk" import photo %}
+<article class="page"><header class="page-header"><p class="eyebrow">THE TEAM / THE PEOPLE</p><h1>Mama's Roster.</h1><p class="lede">The people who make the team.{% if roster.season %} {{ roster.season }}{% endif %}</p></header>
+{% if roster.players and roster.players.length %}<div class="table-wrap"><table class="roster-table"><caption class="visually-hidden">Team roster</caption><thead><tr><th scope="col">Player</th><th scope="col">Year</th><th scope="col">Jersey</th></tr></thead><tbody>{% for player in roster.players %}<tr><th scope="row">{{ player.name }}</th><td>{{ player.year or '—' }}</td><td>{{ player.jerseyNumber or '—' }}</td></tr>{% endfor %}</tbody></table></div>{% else %}<div class="split-content"><div><h2>A TEAM.<br>A LOT OF PEOPLE<br>TO KNOW.</h2><p>The current roster has not been posted yet. The photograph is from the team archive.</p><a class="text-link" href="/team/#join-the-team">Interested in joining?</a></div>{{ photo('dsc08646','Indiana players gathered together with a disc') }}</div>{% endif %}
+{% if roster.updatedOn %}<p class="content-updated">Roster updated {{ roster.updatedOn }}.</p>{% endif %}</article>

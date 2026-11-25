@@ -1,0 +1,40 @@
+{
+  "name": "Indiana Men's Ultimate",
+  "shortName": "IMUF",
+  "organization": "Indiana Men's Ultimate Foundation",
+  "prototype": true,
+  "urls": {
+    "home": "/",
+    "team": "/team/",
+    "join": "/team/#join-the-team",
+    "roster": "/team/roster/",
+    "donate": "/donate-now/",
+    "contact": "/contact-us/",
+    "store": "https://imufmensultimate2022.itemorder.com/shop/home/",
+    "instagram": "https://www.instagram.com/hoosiermamasultimate/",
+    "facebook": "https://www.facebook.com/HoosierMamas",
+    "x": "https://twitter.com/Hoosier_Mamas"
+  },
+  "nav": [
+    {
+      "id": "home",
+      "label": "Home",
+      "href": "/"
+    },
+    {
+      "id": "team",
+      "label": "Team Hub",
+      "href": "/team/"
+    },
+    {
+      "id": "roster",
+      "label": "Roster",
+      "href": "/team/roster/"
+    },
+    {
+      "id": "donate",
+      "label": "Donate",
+      "href": "/donate-now/"
+    }
+  ]
+}

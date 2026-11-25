@@ -1,0 +1,59 @@
+{
+  "members": [
+    {
+      "name": "Joseph Dweck",
+      "role": "PRESIDENT",
+      "classYear": "2019"
+    },
+    {
+      "name": "Mark Mastrangelo",
+      "role": "VICE PRESIDENT",
+      "classYear": "2013"
+    },
+    {
+      "name": "Jesse Roehm",
+      "role": "BOARD PRESIDENT EMERITUS",
+      "classYear": "2010"
+    },
+    {
+      "name": "Taylor Kraemer",
+      "role": "TREASURER",
+      "classYear": "2011"
+    },
+    {
+      "name": "John Jones",
+      "role": "SECRETARY",
+      "classYear": "2014"
+    },
+    {
+      "name": "Jimi Cantwell",
+      "role": "BOARD MEMBER",
+      "classYear": "2007"
+    },
+    {
+      "name": "Nathan Igdaloff",
+      "role": "BOARD MEMBER",
+      "classYear": "2009"
+    },
+    {
+      "name": "Ed Wu",
+      "role": "BOARD MEMBER",
+      "classYear": "2011"
+    },
+    {
+      "name": "Conner Henderson",
+      "role": "BOARD MEMBER",
+      "classYear": "2023"
+    },
+    {
+      "name": "Gabe Wray",
+      "role": "BOARD MEMBER",
+      "classYear": "2019"
+    },
+    {
+      "name": "Trevor Cook",
+      "role": "BOARD MEMBER",
+      "classYear": "2019"
+    }
+  ]
+}

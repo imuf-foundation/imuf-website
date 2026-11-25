@@ -1,0 +1,312 @@
+# Hosted Pages CMS configuration for the local content files.
+# GitHub and Netlify are not connected. Do not treat this file as proof
+# that editors can already publish. See docs/CMS-ACCEPTANCE.md.
+
+media:
+  input: src/assets/images
+  output: /assets/images
+
+content:
+  - name: team
+    label: Team Information
+    type: file
+    path: src/_data/team.json
+    format: json
+    operations:
+      create: false
+      rename: false
+      delete: false
+    fields:
+      - name: intro
+        label: Team introduction
+        type: text
+        required: true
+        description: Shown in Meet the Team on Team Hub. Plain text only.
+      - name: joinText
+        label: Join the Team text
+        type: text
+        description: Recruiting instructions. Leave blank until the team supplies them.
+      - name: recruitingEmail
+        label: Recruiting email
+        type: string
+        description: Shown only when a real address is supplied. Leave blank rather than using a placeholder.
+        pattern:
+          regex: "^$|^[^\\s@]+@[^\\s@]+\\.[^\\s@]+$"
+          message: Enter a valid email address, or leave this field blank.
+      - name: updatedOn
+        label: Last updated
+        type: string
+        description: Use YYYY-MM-DD, or leave blank.
+        pattern:
+          regex: "^$|^[0-9]{4}-[0-9]{2}-[0-9]{2}$"
+          message: Use YYYY-MM-DD, or leave this field blank.
+      - name: practices
+        label: Practices
+        type: object
+        list:
+          collapsible:
+            collapsed: false
+            summary: "{when}"
+        fields:
+          - name: when
+            label: When
+            type: string
+            required: true
+          - name: where
+            label: Where
+            type: string
+            required: true
+          - name: note
+            label: Note
+            type: text
+            description: Optional extra detail for this practice.
+      - name: leadership
+        label: Team leadership
+        type: object
+        list:
+          collapsible:
+            collapsed: false
+            summary: "{name} — {role}"
+        fields:
+          - name: name
+            label: Name
+            type: string
+            required: true
+          - name: role
+            label: Role
+            type: select
+            required: true
+            options:
+              values:
+                - Captain
+                - Officer
+                - Coach
+          - name: title
+            label: Specific office
+            type: string
+            description: Optional. Use for a specific office, such as Team President.
+
+  - name: roster
+    label: Roster
+    type: file
+    path: src/_data/roster.json
+    format: json
+    operations:
+      create: false
+      rename: false
+      delete: false
+    fields:
+      - name: season
+        label: Season
+        type: string
+        description: Leave blank until the team supplies the current season label.
+      - name: updatedOn
+        label: Last updated
+        type: string
+        description: Use YYYY-MM-DD, or leave blank.
+        pattern:
+          regex: "^$|^[0-9]{4}-[0-9]{2}-[0-9]{2}$"
+          message: Use YYYY-MM-DD, or leave this field blank.
+      - name: players
+        label: Players
+        type: object
+        list:
+          collapsible:
+            collapsed: true
+            summary: "{name}"
+        fields:
+          - name: name
+            label: Player name
+            type: string
+            required: true
+          - name: year
+            label: Year
+            type: string
+            description: Optional class year or eligibility year.
+          - name: jerseyNumber
+            label: Jersey number
+            type: string
+            description: Optional. Text, not a photo. Headshots are not part of this milestone.
+
+  - name: schedule
+    label: Season Schedule
+    type: file
+    path: src/_data/schedule.json
+    format: json
+    operations:
+      create: false
+      rename: false
+      delete: false
+    fields:
+      - name: season
+        label: Season
+        type: string
+        description: Leave blank until the team supplies the current season label.
+      - name: events
+        label: Events
+        type: object
+        list:
+          collapsible:
+            collapsed: true
+            summary: "{name}"
+        fields:
+          - name: name
+            label: Event name
+            type: string
+            required: true
+          - name: date
+            label: Date
+            type: string
+            description: Optional. Use the wording the team wants shown.
+          - name: location
+            label: Location
+            type: string
+          - name: note
+            label: Note
+            type: text
+
+  - name: videos
+    label: Video Archive
+    type: file
+    path: src/_data/videos.json
+    format: json
+    operations:
+      create: false
+      rename: false
+      delete: false
+    fields:
+      - name: callahan
+        label: Callahan
+        type: object
+        list:
+          collapsible:
+            collapsed: true
+            summary: "{title}"
+        fields:
+          - name: title
+            label: Title
+            type: string
+            required: true
+          - name: url
+            label: Video URL
+            type: string
+            required: true
+            pattern:
+              regex: "^https://\\S+$"
+              message: Use a public https link. Do not add internal film.
+          - name: note
+            label: Note
+            type: text
+          - name: thumbnail
+            label: Thumbnail
+            type: string
+            description: Optional path under /assets/images/videos/ for this film's own thumbnail. Leave blank to show the title without an image.
+          - name: thumbnailWidth
+            label: Thumbnail width
+            type: number
+            description: Pixel width of the saved thumbnail. Set this only when a thumbnail path is present.
+          - name: thumbnailHeight
+            label: Thumbnail height
+            type: number
+            description: Pixel height of the saved thumbnail. Set this only when a thumbnail path is present.
+      - name: highlights
+        label: Highlights
+        type: object
+        list:
+          collapsible:
+            collapsed: true
+            summary: "{title}"
+        fields:
+          - name: title
+            label: Title
+            type: string
+            required: true
+          - name: url
+            label: Video URL
+            type: string
+            required: true
+            pattern:
+              regex: "^https://\\S+$"
+              message: Use a public https link. Do not add internal film.
+          - name: note
+            label: Note
+            type: text
+          - name: thumbnail
+            label: Thumbnail
+            type: string
+            description: Optional path under /assets/images/videos/ for this film's own thumbnail. Leave blank to show the title without an image.
+          - name: thumbnailWidth
+            label: Thumbnail width
+            type: number
+            description: Pixel width of the saved thumbnail. Set this only when a thumbnail path is present.
+          - name: thumbnailHeight
+            label: Thumbnail height
+            type: number
+            description: Pixel height of the saved thumbnail. Set this only when a thumbnail path is present.
+      - name: lowlights
+        label: Lowlights
+        type: object
+        list:
+          collapsible:
+            collapsed: true
+            summary: "{title}"
+        fields:
+          - name: title
+            label: Title
+            type: string
+            required: true
+          - name: url
+            label: Video URL
+            type: string
+            required: true
+            pattern:
+              regex: "^https://\\S+$"
+              message: Use a public https link. Do not add internal film.
+          - name: note
+            label: Note
+            type: text
+          - name: thumbnail
+            label: Thumbnail
+            type: string
+            description: Optional path under /assets/images/videos/ for this film's own thumbnail. Leave blank to show the title without an image.
+          - name: thumbnailWidth
+            label: Thumbnail width
+            type: number
+            description: Pixel width of the saved thumbnail. Set this only when a thumbnail path is present.
+          - name: thumbnailHeight
+            label: Thumbnail height
+            type: number
+            description: Pixel height of the saved thumbnail. Set this only when a thumbnail path is present.
+
+  - name: board
+    label: IMUF Board
+    type: file
+    path: src/_data/board.json
+    format: json
+    operations:
+      create: false
+      rename: false
+      delete: false
+    fields:
+      - name: members
+        label: Board members
+        type: object
+        list:
+          collapsible:
+            collapsed: true
+            summary: "{name}"
+        fields:
+          - name: name
+            label: Name
+            type: string
+            required: true
+          - name: role
+            label: Role
+            type: string
+            required: true
+            description: Use the published role wording. Confirm that it is still current.
+          - name: classYear
+            label: Class year
+            type: string
+            description: Four-digit class year, or leave blank.
+

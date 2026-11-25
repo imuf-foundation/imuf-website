@@ -1,0 +1,37 @@
+[
+  {
+    "from": "/home/index.html",
+    "to": "/",
+    "label": "Home"
+  },
+  {
+    "from": "/about/index.html",
+    "to": "/about-imuf/",
+    "label": "About IMUF"
+  },
+  {
+    "from": "/orientation/index.html",
+    "to": "/team/player-resources/",
+    "label": "Player Resources"
+  },
+  {
+    "from": "/current-roster-1/index.html",
+    "to": "/team/roster/",
+    "label": "Mama's Roster"
+  },
+  {
+    "from": "/season-schedule/index.html",
+    "to": "/team/schedule/",
+    "label": "Season Schedule"
+  },
+  {
+    "from": "/history-2/index.html",
+    "to": "/history/#chapter-2",
+    "label": "Team History"
+  },
+  {
+    "from": "/history-3/index.html",
+    "to": "/history/#chapter-3",
+    "label": "Team History"
+  }
+]
