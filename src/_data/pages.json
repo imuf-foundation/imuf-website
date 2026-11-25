@@ -1,0 +1,317 @@
+{
+  "meta": {
+    "description": "Meet the HoosierMama?s, explore the Team Hub and stay connected through the Indiana Men's Ultimate Foundation."
+  },
+  "routes": {
+    "about": "/about-imuf/",
+    "board": "/imuf-board/",
+    "history": "/history/",
+    "videos": "/videos/",
+    "newsletters": "/newsletters/",
+    "schedule": "/team/schedule/",
+    "resources": "/team/player-resources/",
+    "resourcesBasics": "/team/player-resources/#basics",
+    "practices": "/team/#practices",
+    "scholarship": "/scholarships/mike-moore/",
+    "foundationContact": "https://www.hoosiermamas.org/contact-us/",
+    "foundationDonate": "https://www.hoosiermamas.org/donate-now",
+    "newsletterArchive": "https://maxklaben.activehosted.com/archive/1",
+    "videoArchive": "https://www.hoosiermamas.org/videos"
+  },
+  "header": {
+    "homeAriaLabel": "Indiana Ultimate home",
+    "wordmarkLine1": "INDIANA",
+    "wordmarkLine2": "MEN'S ULTIMATE",
+    "navLabel": "Main navigation",
+    "donateLabel": "Donate"
+  },
+  "navigation": {
+    "groups": [
+      {
+        "id": "team",
+        "label": "Team",
+        "links": [
+          {
+            "label": "Team Hub",
+            "urlKey": "team"
+          },
+          {
+            "label": "Join the Team",
+            "urlKey": "join"
+          },
+          {
+            "label": "Mama's Roster",
+            "urlKey": "roster"
+          },
+          {
+            "label": "Season Schedule",
+            "route": "schedule"
+          },
+          {
+            "label": "Player Resources",
+            "route": "resources"
+          }
+        ]
+      },
+      {
+        "id": "alumni",
+        "label": "Alumni & History",
+        "links": [
+          {
+            "label": "Team History",
+            "route": "history"
+          },
+          {
+            "label": "Video Archive",
+            "route": "videos"
+          },
+          {
+            "label": "Newsletters",
+            "route": "newsletters"
+          }
+        ]
+      },
+      {
+        "id": "scholarships",
+        "label": "Scholarships",
+        "links": [
+          {
+            "label": "Mike Moore Scholarship",
+            "route": "scholarship"
+          }
+        ]
+      },
+      {
+        "id": "about",
+        "label": "About IMUF",
+        "links": [
+          {
+            "label": "The Foundation",
+            "route": "about"
+          },
+          {
+            "label": "The Board",
+            "route": "board"
+          },
+          {
+            "label": "Contact",
+            "urlKey": "contact"
+          }
+        ]
+      }
+    ]
+  },
+  "footer": {
+    "nameLine1": "INDIANA",
+    "nameLine2": "ULTIMATE",
+    "promptLine1": "Keep up with",
+    "promptLine2": "Indiana ultimate.",
+    "signupAriaLabel": "Newsletter signup",
+    "signupLabel": "Subscribe to the newsletter",
+    "emailPlaceholder": "Your email address",
+    "subscribeLabel": "Subscribe",
+    "homeSubscribeAriaLabel": "Subscribe — newsletter connection pending",
+    "signupNote": "Signup is not available yet.",
+    "archiveLink": {
+      "label": "Read past newsletters",
+      "route": "newsletters"
+    },
+    "foundationRoute": "about",
+    "navLabel": "Footer navigation",
+    "donateLabel": "Donate",
+    "contactLabel": "Contact",
+    "storeLabel": "Store",
+    "instagramLabel": "Instagram",
+    "facebookLabel": "Facebook",
+    "xLabel": "X"
+  },
+  "home": {
+    "location": "BLOOMINGTON, IN",
+    "university": "INDIANA UNIVERSITY",
+    "titleLine1": "INDIANA",
+    "titleLine2": "ULTIMATE",
+    "tagline": "Home of the HoosierMama?s.",
+    "heroJoin": {
+      "label": "Join the team",
+      "urlKey": "join"
+    },
+    "heroHub": {
+      "label": "Explore the Team Hub",
+      "urlKey": "team"
+    },
+    "recruitLead": "Play for",
+    "recruitTitle": "Indiana.",
+    "recruitJoin": {
+      "label": "Join the team",
+      "urlKey": "join"
+    },
+    "recruitNew": {
+      "label": "New to ultimate?",
+      "route": "resourcesBasics"
+    },
+    "hubLine1": "Your team.",
+    "hubLine2": "All here.",
+    "hubEntry": {
+      "label": "Explore the Team Hub",
+      "urlKey": "team"
+    },
+    "hubNavLabel": "Team resources",
+    "hubLinks": [
+      {
+        "label": "Mama's Roster",
+        "urlKey": "roster"
+      },
+      {
+        "label": "Season Schedule",
+        "route": "schedule"
+      },
+      {
+        "label": "Player Resources",
+        "route": "resources"
+      },
+      {
+        "label": "Practices & Leadership",
+        "route": "practices"
+      }
+    ],
+    "foundationTitle": "More than a season.",
+    "foundationParagraphs": [
+      "For everyone who has worn the jersey. And everyone who helps the next team take the field.",
+      "Stay connected through IMUF, our community of alumni and supporters."
+    ],
+    "foundationNavLabel": "Alumni and foundation",
+    "foundationLinks": [
+      {
+        "label": "Meet the foundation",
+        "route": "about"
+      },
+      {
+        "label": "Team history",
+        "route": "history"
+      },
+      {
+        "label": "Mike Moore Scholarship",
+        "route": "scholarship"
+      }
+    ],
+    "foundationDonate": "Support the team",
+    "archiveLine1": "Leave it all",
+    "archiveLine2": "out on the field.",
+    "archiveAction": {
+      "label": "Browse Callahan Films & Highlights",
+      "route": "videos"
+    }
+  },
+  "about": {
+    "eyebrow": "THE FOUNDATION",
+    "heading": "About IMUF.",
+    "introduction": [
+      "Our goal is to develop highly competitive athletes, train future leaders, and foster a sense of community and teamwork.",
+      "We are an IRS-approved non-profit organization focused on supporting the Indiana Hoosiermama?s"
+    ],
+    "photo": {
+      "id": "dsc07017",
+      "alt": "David, Evan and Rowland standing shoulder to shoulder in red Indiana jerseys"
+    },
+    "values": [
+      {
+        "label": "Creativity.",
+        "text": "In order for us to fulfill our mission, we need to think creatively. That’s why we are dedicated to crafting a culture that fosters unique, out-of-the-box thinkers. We aim to make ultimate at Indiana University a place for players to develop the skills to develop creative solutions in ultimate, and in life."
+      },
+      {
+        "label": "Inclusion.",
+        "text": "Ultimate should be a sport everyone can play. We aim to break down barriers to access in ultimate, and making sure that all students at Indiana University have the opportunity to succeed in the sport."
+      },
+      {
+        "label": "Competitiveness.",
+        "text": "Competitiveness is at the heart of the sport. We want to create a place where players aspire to achieve greater and greater goals. We work to provide students who play ultimate at Indiana University a place where they can compete, while also developing important skills such as integrity and teamwork."
+      },
+      {
+        "label": "Intensity.",
+        "text": "Ultimate is a sport that requires focus and energy, especially during the last moments of a long tournament weekend. That’s why we are helping cultivate a community that allows players to push their game to the next level. We aim to foster a passion for the sport both on and off the field."
+      },
+      {
+        "label": "Discipline.",
+        "text": "Among the most important skills in ultimate - and in life - is a consistent effort towards team goals. We want to make ultimate at Indiana University a place where players learn the values of an effective team - accountability, teamwork, and dedication. We want to make players better at ultimate, while reinforcing skills that are applicable outside of the sport."
+      },
+      {
+        "label": "Trust.",
+        "text": "Trust is our backbone. Our organization relies on trust to advance our on-the-field goals and our off-the-field plans. Trusting ourselves and trusting others is what allows us to keep moving forward."
+      }
+    ],
+    "linksLabel": "Related foundation pages",
+    "links": [
+      {
+        "label": "Board",
+        "route": "board"
+      },
+      {
+        "label": "History",
+        "route": "history"
+      },
+      {
+        "label": "Contact",
+        "urlKey": "contact"
+      }
+    ]
+  },
+  "contact": {
+    "heading": "Contact IMUF.",
+    "foundationText": "Questions about IMUF, alumni connections and support go to the foundation's current contact page.",
+    "foundationButton": {
+      "label": "Contact the foundation",
+      "route": "foundationContact"
+    },
+    "playHeading": "Looking to play?",
+    "playText": "The Team Hub is the starting point for recruiting, practice information and the current team.",
+    "playLink": {
+      "label": "Join the team",
+      "urlKey": "join"
+    }
+  },
+  "donate": {
+    "heading": "Support Indiana ultimate.",
+    "text": "Support Indiana men's ultimate through the foundation's current donation page.",
+    "button": {
+      "label": "Donate through IMUF",
+      "route": "foundationDonate"
+    },
+    "note": "This page does not collect payments.",
+    "photo": {
+      "id": "dsc03756",
+      "alt": "Indiana teammates reacting together on the sideline"
+    }
+  },
+  "newsletters": {
+    "eyebrow": "ALUMNI & HISTORY",
+    "heading": "Newsletters.",
+    "introduction": "Team updates and news from the Indiana Men's Ultimate Foundation.",
+    "archiveButton": {
+      "label": "Read past newsletters",
+      "route": "newsletterArchive"
+    },
+    "note": "Signup is not available on this page yet.",
+    "contactLink": {
+      "label": "Contact",
+      "urlKey": "contact"
+    }
+  },
+  "history": {
+    "eyebrow": "ALUMNI & HISTORY",
+    "heading": "Team history.",
+    "navLabel": "History chapters"
+  },
+  "videos": {
+    "eyebrow": "ALUMNI & HISTORY / THE ARCHIVE",
+    "heading": "Video archive.",
+    "lede": "Callahan films, highlights and the moments that stay with the team.",
+    "callahanAction": "Watch Kip's Callahan film",
+    "archiveLink": {
+      "label": "Visit the existing video archive",
+      "route": "videoArchive"
+    },
+    "emptyCallahan": "No Callahan films are listed yet.",
+    "emptyHighlights": "No highlights are listed yet.",
+    "emptyLowlights": "No lowlights are listed yet."
+  }
+}

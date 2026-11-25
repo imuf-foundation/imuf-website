@@ -11,6 +11,26 @@ const SCHEDULE_FILE = "src/_data/schedule.json";
 const VIDEOS_FILE = "src/_data/videos.json";
 const BOARD_FILE = "src/_data/board.json";
 const HISTORY_FILE = "src/_data/history.json";
+const SITE_FILE = "src/_data/site.json";
+const PAGES_FILE = "src/_data/pages.json";
+const SITE_URL_KEYS = ["home", "team", "join", "roster", "donate", "contact", "store", "instagram", "facebook", "x"];
+const PAGE_ROUTE_KEYS = [
+	"about",
+	"board",
+	"history",
+	"videos",
+	"newsletters",
+	"schedule",
+	"resources",
+	"resourcesBasics",
+	"practices",
+	"scholarship",
+	"foundationContact",
+	"foundationDonate",
+	"newsletterArchive",
+	"videoArchive",
+];
+const PHOTO_WIDTHS = [640, 960, 1600];
 const VIDEO_GROUPS = ["callahan", "highlights", "lowlights"];
 const HISTORY_TYPES = new Set(["p", "h3", "h4", "quote", "figure"]);
 const TEXTUAL_HISTORY_TYPES = new Set(["p", "h3", "h4", "quote"]);
@@ -517,6 +537,12 @@ export function validateContent(projectRoot = defaultRoot) {
 		const value = item.thumbnail;
 		const field = `${prefix}.thumbnail`;
 
+		if (item.thumbnailAlt !== undefined && item.thumbnailAlt !== null && typeof item.thumbnailAlt !== "string") {
+			addError(file, `${prefix}.thumbnailAlt`, `Expected a string, received ${describeType(item.thumbnailAlt)}.`);
+		} else if (isAbsentOptional(value) && typeof item.thumbnailAlt === "string" && item.thumbnailAlt.trim() !== "") {
+			addError(file, `${prefix}.thumbnailAlt`, "Alt text requires a thumbnail image.");
+		}
+
 		if (isAbsentOptional(value)) {
 			if (item.thumbnailWidth !== undefined || item.thumbnailHeight !== undefined) {
 				addError(file, field, "Thumbnail dimensions require a thumbnail path.");
@@ -582,6 +608,287 @@ export function validateContent(projectRoot = defaultRoot) {
 		}
 	}
 
+	function valueAt(data, path) {
+		return path.split(".").reduce((current, key) => {
+			if (!isPlainObject(current)) {
+				return undefined;
+			}
+			return current[key];
+		}, data);
+	}
+
+	function validateSite(file, data) {
+		if (!isPlainObject(data)) {
+			addError(file, "(root)", `Expected a JSON object, received ${describeType(data)}.`);
+			return;
+		}
+
+		assertRequiredString(file, "name", data.name);
+		assertRequiredString(file, "shortName", data.shortName);
+		assertRequiredString(file, "organization", data.organization);
+
+		if (typeof data.prototype !== "boolean") {
+			addError(file, "prototype", `Expected true or false, received ${describeType(data.prototype)}.`);
+		}
+
+		if (!isPlainObject(data.urls)) {
+			addError(file, "urls", `Expected an object, received ${describeType(data.urls)}.`);
+		} else {
+			for (const key of SITE_URL_KEYS) {
+				if (typeof data.urls[key] !== "string" || !isSafeHistoryLink(data.urls[key])) {
+					addError(file, `urls.${key}`, "Expected a safe https URL or local route.");
+				}
+			}
+		}
+
+		if (!Array.isArray(data.nav)) {
+			addError(file, "nav", `Expected an array, received ${describeType(data.nav)}.`);
+			return;
+		}
+
+		data.nav.forEach((item, index) => {
+			const prefix = `nav[${index}]`;
+			if (!isPlainObject(item)) {
+				addError(file, prefix, `Expected an object, received ${describeType(item)}.`);
+				return;
+			}
+			assertRequiredString(file, `${prefix}.id`, item.id);
+			assertRequiredString(file, `${prefix}.label`, item.label);
+			if (typeof item.href !== "string" || !isSafeHistoryLink(item.href)) {
+				addError(file, `${prefix}.href`, "Expected a safe https URL, local route, or fragment.");
+			}
+		});
+	}
+
+	function validateLink(file, field, link, routes) {
+		if (!isPlainObject(link)) {
+			addError(file, field, `Expected an object, received ${describeType(link)}.`);
+			return;
+		}
+
+		assertRequiredString(file, `${field}.label`, link.label);
+
+		if (link.href !== undefined) {
+			addError(file, `${field}.href`, "Store the address once in site.urls or pages.routes.");
+		}
+
+		const hasKey = typeof link.urlKey === "string" && link.urlKey.trim() !== "";
+		const hasRoute = typeof link.route === "string" && link.route.trim() !== "";
+
+		if (hasKey === hasRoute) {
+			addError(file, field, "Set one destination, either urlKey or route.");
+		}
+
+		if (hasKey && !SITE_URL_KEYS.includes(link.urlKey)) {
+			addError(file, `${field}.urlKey`, `Unknown site URL "${link.urlKey}".`);
+		}
+
+		if (hasRoute && (!isPlainObject(routes) || typeof routes[link.route] !== "string")) {
+			addError(file, `${field}.route`, `Unknown page route "${link.route}".`);
+		}
+	}
+
+	function validatePreparedPhoto(file, field, photo) {
+		if (!isPlainObject(photo)) {
+			addError(file, field, `Expected an object, received ${describeType(photo)}.`);
+			return;
+		}
+
+		assertRequiredString(file, `${field}.alt`, photo.alt);
+
+		if (typeof photo.id !== "string" || !/^[A-Za-z0-9-]+$/.test(photo.id)) {
+			addError(file, `${field}.id`, "Expected the stem of a prepared 640, 960, and 1600 image set.");
+			return;
+		}
+
+		for (const width of PHOTO_WIDTHS) {
+			const relativePath = join("src", "assets", "images", `${photo.id}-${width}.webp`);
+			const absolutePath = join(projectRoot, relativePath);
+			if (!existsSync(absolutePath) || !statSync(absolutePath).isFile()) {
+				addError(file, `${field}.id`, `Missing prepared image ${relativePath}.`);
+			}
+		}
+	}
+
+	function validateStringList(file, field, values) {
+		if (!Array.isArray(values) || values.length === 0) {
+			addError(file, field, "Expected a non-empty array of text.");
+			return;
+		}
+
+		values.forEach((value, index) => {
+			assertRequiredString(file, `${field}[${index}]`, value);
+		});
+	}
+
+	function validatePages(file, data) {
+		if (!isPlainObject(data)) {
+			addError(file, "(root)", `Expected a JSON object, received ${describeType(data)}.`);
+			return;
+		}
+
+		if (!isPlainObject(data.routes)) {
+			addError(file, "routes", `Expected an object, received ${describeType(data.routes)}.`);
+		} else {
+			for (const key of PAGE_ROUTE_KEYS) {
+				if (typeof data.routes[key] !== "string" || !isSafeHistoryLink(data.routes[key])) {
+					addError(file, `routes.${key}`, "Expected a safe https URL, local route, or fragment.");
+				}
+			}
+		}
+
+		const requiredStrings = [
+			"meta.description",
+			"header.homeAriaLabel",
+			"header.wordmarkLine1",
+			"header.wordmarkLine2",
+			"header.navLabel",
+			"header.donateLabel",
+			"footer.nameLine1",
+			"footer.nameLine2",
+			"footer.promptLine1",
+			"footer.promptLine2",
+			"footer.signupAriaLabel",
+			"footer.signupLabel",
+			"footer.emailPlaceholder",
+			"footer.subscribeLabel",
+			"footer.homeSubscribeAriaLabel",
+			"footer.signupNote",
+			"footer.foundationRoute",
+			"footer.navLabel",
+			"footer.donateLabel",
+			"footer.contactLabel",
+			"footer.storeLabel",
+			"footer.instagramLabel",
+			"footer.facebookLabel",
+			"footer.xLabel",
+			"home.location",
+			"home.university",
+			"home.titleLine1",
+			"home.titleLine2",
+			"home.tagline",
+			"home.recruitLead",
+			"home.recruitTitle",
+			"home.hubLine1",
+			"home.hubLine2",
+			"home.hubNavLabel",
+			"home.foundationTitle",
+			"home.foundationNavLabel",
+			"home.foundationDonate",
+			"home.archiveLine1",
+			"home.archiveLine2",
+			"about.eyebrow",
+			"about.heading",
+			"about.linksLabel",
+			"contact.heading",
+			"contact.foundationText",
+			"contact.playHeading",
+			"contact.playText",
+			"donate.heading",
+			"donate.text",
+			"donate.note",
+			"newsletters.eyebrow",
+			"newsletters.heading",
+			"newsletters.introduction",
+			"newsletters.note",
+			"history.eyebrow",
+			"history.heading",
+			"history.navLabel",
+			"videos.eyebrow",
+			"videos.heading",
+			"videos.lede",
+			"videos.callahanAction",
+			"videos.emptyCallahan",
+			"videos.emptyHighlights",
+			"videos.emptyLowlights",
+		];
+
+		for (const path of requiredStrings) {
+			assertRequiredString(file, path, valueAt(data, path));
+		}
+
+		if (typeof data.footer?.foundationRoute === "string" && data.footer.foundationRoute.trim() !== "" && typeof data.routes?.[data.footer.foundationRoute] !== "string") {
+			addError(file, "footer.foundationRoute", "Choose a route defined in pages.routes.");
+		}
+
+		validateLink(file, "footer.archiveLink", data.footer?.archiveLink, data.routes);
+		validateLink(file, "home.heroJoin", data.home?.heroJoin, data.routes);
+		validateLink(file, "home.heroHub", data.home?.heroHub, data.routes);
+		validateLink(file, "home.recruitJoin", data.home?.recruitJoin, data.routes);
+		validateLink(file, "home.recruitNew", data.home?.recruitNew, data.routes);
+		validateLink(file, "home.hubEntry", data.home?.hubEntry, data.routes);
+		validateLink(file, "home.archiveAction", data.home?.archiveAction, data.routes);
+		validateLink(file, "contact.foundationButton", data.contact?.foundationButton, data.routes);
+		validateLink(file, "contact.playLink", data.contact?.playLink, data.routes);
+		validateLink(file, "donate.button", data.donate?.button, data.routes);
+		validateLink(file, "newsletters.archiveButton", data.newsletters?.archiveButton, data.routes);
+		validateLink(file, "newsletters.contactLink", data.newsletters?.contactLink, data.routes);
+		validateLink(file, "videos.archiveLink", data.videos?.archiveLink, data.routes);
+
+		const linkLists = [
+			["navigation.groups", data.navigation?.groups, true],
+			["home.hubLinks", data.home?.hubLinks, false],
+			["home.foundationLinks", data.home?.foundationLinks, false],
+			["about.links", data.about?.links, false],
+		];
+
+		if (!Array.isArray(data.navigation?.groups) || data.navigation.groups.length === 0) {
+			addError(file, "navigation.groups", "Expected a non-empty array.");
+		} else if (!data.navigation.groups.some((group) => group && group.id === "team")) {
+			addError(file, "navigation.groups", 'The team group id must stay "team".');
+		}
+
+		for (const [field, entries, grouped] of linkLists) {
+			if (!Array.isArray(entries)) {
+				if (field !== "navigation.groups") {
+					addError(file, field, `Expected an array, received ${describeType(entries)}.`);
+				}
+				continue;
+			}
+
+			entries.forEach((entry, index) => {
+				if (grouped) {
+					const prefix = `${field}[${index}]`;
+					if (!isPlainObject(entry)) {
+						addError(file, prefix, `Expected an object, received ${describeType(entry)}.`);
+						return;
+					}
+					assertRequiredString(file, `${prefix}.id`, entry.id);
+					assertRequiredString(file, `${prefix}.label`, entry.label);
+					if (!Array.isArray(entry.links) || entry.links.length === 0) {
+						addError(file, `${prefix}.links`, "Expected a non-empty array.");
+						return;
+					}
+					entry.links.forEach((link, linkIndex) => {
+						validateLink(file, `${prefix}.links[${linkIndex}]`, link, data.routes);
+					});
+					return;
+				}
+
+				validateLink(file, `${field}[${index}]`, entry, data.routes);
+			});
+		}
+
+		validateStringList(file, "home.foundationParagraphs", data.home?.foundationParagraphs);
+		validateStringList(file, "about.introduction", data.about?.introduction);
+
+		if (!Array.isArray(data.about?.values) || data.about.values.length === 0) {
+			addError(file, "about.values", "Expected a non-empty array.");
+		} else {
+			data.about.values.forEach((value, index) => {
+				if (!isPlainObject(value)) {
+					addError(file, `about.values[${index}]`, `Expected an object, received ${describeType(value)}.`);
+					return;
+				}
+				assertRequiredString(file, `about.values[${index}].label`, value.label);
+				assertRequiredString(file, `about.values[${index}].text`, value.text);
+			});
+		}
+
+		validatePreparedPhoto(file, "about.photo", data.about?.photo);
+		validatePreparedPhoto(file, "donate.photo", data.donate?.photo);
+	}
+
 	const team = readJson(TEAM_FILE);
 	if (team.parsed) {
 		validateTeam(TEAM_FILE, team.value);
@@ -610,6 +917,16 @@ export function validateContent(projectRoot = defaultRoot) {
 	const history = readJson(HISTORY_FILE);
 	if (history.parsed) {
 		validateHistory(HISTORY_FILE, history.value);
+	}
+
+	const site = readJson(SITE_FILE);
+	if (site.parsed) {
+		validateSite(SITE_FILE, site.value);
+	}
+
+	const pages = readJson(PAGES_FILE);
+	if (pages.parsed) {
+		validatePages(PAGES_FILE, pages.value);
 	}
 
 	return {

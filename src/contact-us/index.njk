@@ -6,17 +6,17 @@ bodyClass: support-page contact-page
 ---
 <article class="page">
   <header class="page-header">
-    <h1>Contact IMUF.</h1>
+    <h1>{{ pages.contact.heading | plain | safe }}</h1>
   </header>
   <div class="contact-layout support-section">
     <div>
-      <p class="support-prose">Questions about IMUF, alumni connections and support go to the foundation's current contact page.</p>
-      <a class="button button-dark" href="https://www.hoosiermamas.org/contact-us/">Contact the foundation</a>
+      <p class="support-prose">{{ pages.contact.foundationText | plain | safe }}</p>
+      <a class="button button-dark" href="{{ pages.contact.foundationButton | linkHref(site.urls, pages.routes) }}">{{ pages.contact.foundationButton.label | plain | safe }}</a>
     </div>
     <div>
-      <h2 class="support-subhead">Looking to play?</h2>
-      <p class="support-prose">The Team Hub is the starting point for recruiting, practice information and the current team.</p>
-      <a class="text-link" href="/team/#join-the-team">Join the team</a>
+      <h2 class="support-subhead">{{ pages.contact.playHeading | plain | safe }}</h2>
+      <p class="support-prose">{{ pages.contact.playText | plain | safe }}</p>
+      <a class="text-link" href="{{ pages.contact.playLink | linkHref(site.urls, pages.routes) }}">{{ pages.contact.playLink.label | plain | safe }}</a>
     </div>
   </div>
 </article>

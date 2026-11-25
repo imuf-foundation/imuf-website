@@ -72,7 +72,161 @@ const EMPTY_HISTORY = {
 	chapters: [],
 };
 
-function withFixture(teamValue, rosterValue, { rawTeam = false, rawRoster = false, scheduleValue = EMPTY_SCHEDULE, videosValue = EMPTY_VIDEOS, boardValue = EMPTY_BOARD, historyValue = EMPTY_HISTORY, historyImage = null, videoImage = null } = {}) {
+const FIXTURE_SITE = {
+	name: "Indiana Men's Ultimate",
+	shortName: "IMUF",
+	organization: "Indiana Men's Ultimate Foundation",
+	prototype: true,
+	urls: {
+		home: "/",
+		team: "/team/",
+		join: "/team/#join-the-team",
+		roster: "/team/roster/",
+		donate: "/donate-now/",
+		contact: "/contact-us/",
+		store: "https://example.com/store",
+		instagram: "https://example.com/instagram",
+		facebook: "https://example.com/facebook",
+		x: "https://example.com/x",
+	},
+	nav: [],
+};
+
+function fixtureLink(label, destination) {
+	return { label, ...destination };
+}
+
+const FIXTURE_PAGES = {
+	meta: { description: "Fixture description." },
+	routes: {
+		about: "/about-imuf/",
+		board: "/imuf-board/",
+		history: "/history/",
+		videos: "/videos/",
+		newsletters: "/newsletters/",
+		schedule: "/team/schedule/",
+		resources: "/team/player-resources/",
+		resourcesBasics: "/team/player-resources/#basics",
+		practices: "/team/#practices",
+		scholarship: "/scholarships/mike-moore/",
+		foundationContact: "https://example.com/contact",
+		foundationDonate: "https://example.com/donate",
+		newsletterArchive: "https://example.com/newsletters",
+		videoArchive: "https://example.com/videos",
+	},
+	header: {
+		homeAriaLabel: "Home",
+		wordmarkLine1: "INDIANA",
+		wordmarkLine2: "ULTIMATE",
+		navLabel: "Main",
+		donateLabel: "Donate",
+	},
+	navigation: {
+		groups: [
+			{
+				id: "team",
+				label: "Team",
+				links: [fixtureLink("Team Hub", { urlKey: "team" })],
+			},
+		],
+	},
+	footer: {
+		nameLine1: "INDIANA",
+		nameLine2: "ULTIMATE",
+		promptLine1: "Keep up",
+		promptLine2: "with the team.",
+		signupAriaLabel: "Newsletter signup",
+		signupLabel: "Subscribe",
+		emailPlaceholder: "Email",
+		subscribeLabel: "Subscribe",
+		homeSubscribeAriaLabel: "Subscribe later",
+		signupNote: "Signup is not available yet.",
+		archiveLink: fixtureLink("Newsletters", { route: "newsletters" }),
+		foundationRoute: "about",
+		navLabel: "Footer",
+		donateLabel: "Donate",
+		contactLabel: "Contact",
+		storeLabel: "Store",
+		instagramLabel: "Instagram",
+		facebookLabel: "Facebook",
+		xLabel: "X",
+	},
+	home: {
+		location: "BLOOMINGTON, IN",
+		university: "INDIANA UNIVERSITY",
+		titleLine1: "INDIANA",
+		titleLine2: "ULTIMATE",
+		tagline: "Fixture tagline.",
+		heroJoin: fixtureLink("Join", { urlKey: "join" }),
+		heroHub: fixtureLink("Hub", { urlKey: "team" }),
+		recruitLead: "Play for",
+		recruitTitle: "Indiana.",
+		recruitJoin: fixtureLink("Join", { urlKey: "join" }),
+		recruitNew: fixtureLink("New", { route: "resourcesBasics" }),
+		hubLine1: "Your team.",
+		hubLine2: "All here.",
+		hubEntry: fixtureLink("Hub", { urlKey: "team" }),
+		hubNavLabel: "Team resources",
+		hubLinks: [fixtureLink("Schedule", { route: "schedule" })],
+		foundationTitle: "More than a season.",
+		foundationParagraphs: ["Fixture support copy."],
+		foundationNavLabel: "Foundation",
+		foundationLinks: [fixtureLink("About", { route: "about" })],
+		foundationDonate: "Support",
+		archiveLine1: "Leave it",
+		archiveLine2: "on the field.",
+		archiveAction: fixtureLink("Videos", { route: "videos" }),
+	},
+	about: {
+		eyebrow: "THE FOUNDATION",
+		heading: "About IMUF.",
+		introduction: ["Fixture introduction."],
+		photo: { id: "fixture-photo", alt: "Fixture photograph" },
+		values: [{ label: "Trust.", text: "Fixture value." }],
+		linksLabel: "Related",
+		links: [fixtureLink("Contact", { urlKey: "contact" })],
+	},
+	contact: {
+		heading: "Contact IMUF.",
+		foundationText: "Fixture contact.",
+		foundationButton: fixtureLink("Contact", { route: "foundationContact" }),
+		playHeading: "Looking to play?",
+		playText: "Fixture play.",
+		playLink: fixtureLink("Join", { urlKey: "join" }),
+	},
+	donate: {
+		heading: "Support.",
+		text: "Fixture donation.",
+		button: fixtureLink("Donate", { route: "foundationDonate" }),
+		note: "This page does not collect payments.",
+		photo: { id: "fixture-photo", alt: "Fixture photograph" },
+	},
+	newsletters: {
+		eyebrow: "ALUMNI & HISTORY",
+		heading: "Newsletters.",
+		introduction: "Fixture newsletter.",
+		archiveButton: fixtureLink("Archive", { route: "newsletterArchive" }),
+		note: "Signup is not available on this page yet.",
+		contactLink: fixtureLink("Contact", { urlKey: "contact" }),
+	},
+	history: {
+		eyebrow: "ALUMNI & HISTORY",
+		heading: "Team history.",
+		navLabel: "History chapters",
+	},
+	videos: {
+		eyebrow: "ALUMNI & HISTORY / THE ARCHIVE",
+		heading: "Video archive.",
+		lede: "Fixture films.",
+		callahanAction: "Watch the fixture",
+		archiveLink: fixtureLink("Archive", { route: "videoArchive" }),
+		emptyCallahan: "None yet.",
+		emptyHighlights: "None yet.",
+		emptyLowlights: "None yet.",
+	},
+};
+
+function withFixture(teamValue, rosterValue, { rawTeam = false, rawRoster = false, scheduleValue = EMPTY_SCHEDULE, videosValue = EMPTY_VIDEOS, boardValue = EMPTY_BOARD, historyValue = EMPTY_HISTORY, historyImage = null, videoImage = null, siteValue = FIXTURE_SITE, pagesValue = FIXTURE_PAGES, omitPages = false, rawPages = false } = {}) {
 	const dir = mkdtempSync(join(tmpdir(), "imuf-validate-"));
 
 	try {
@@ -83,6 +237,16 @@ function withFixture(teamValue, rosterValue, { rawTeam = false, rawRoster = fals
 		writeFileSync(join(dir, "src", "_data", "videos.json"), stringify(videosValue, false));
 		writeFileSync(join(dir, "src", "_data", "board.json"), stringify(boardValue, false));
 		writeFileSync(join(dir, "src", "_data", "history.json"), stringify(historyValue, false));
+		writeFileSync(join(dir, "src", "_data", "site.json"), stringify(siteValue, false));
+		if (!omitPages) {
+			writeFileSync(join(dir, "src", "_data", "pages.json"), stringify(pagesValue, rawPages));
+		}
+
+		for (const width of [640, 960, 1600]) {
+			const imagePath = join(dir, "src", "assets", "images", `fixture-photo-${width}.webp`);
+			mkdirSync(dirname(imagePath), { recursive: true });
+			writeFileSync(imagePath, "fixture");
+		}
 
 		if (historyImage) {
 			const imagePath = join(dir, "src", "assets", "images", historyImage);
@@ -530,5 +694,106 @@ describe("history", () => {
 			},
 		});
 		assert.equal(result.ok, true, result.errors.join("\n"));
+	});
+});
+
+describe("launch page content", () => {
+	it("passes the fixture page content and prepared photographs", () => {
+		const result = withFixture(EMPTY_TEAM, EMPTY_ROSTER);
+		assert.equal(result.ok, true, result.errors.join("\n"));
+	});
+
+	it("rejects a missing pages file", () => {
+		assertFails(withFixture(EMPTY_TEAM, EMPTY_ROSTER, { omitPages: true }), /src\/_data\/pages\.json: \(file\)/);
+	});
+
+	it("rejects blank required launch copy", () => {
+		const pages = structuredClone(FIXTURE_PAGES);
+		pages.about.heading = " ";
+		pages.contact.foundationText = "";
+		pages.donate.text = "";
+		const result = withFixture(EMPTY_TEAM, EMPTY_ROSTER, { pagesValue: pages });
+		assertFails(result, /about\.heading/);
+		assertFails(result, /contact\.foundationText/);
+		assertFails(result, /donate\.text/);
+	});
+
+	it("rejects unsafe page destinations and duplicated link addresses", () => {
+		const pages = structuredClone(FIXTURE_PAGES);
+		pages.routes.foundationDonate = "javascript:alert(1)";
+		pages.routes.newsletterArchive = "//example.com/list";
+		pages.home.heroJoin = { label: "Join", href: "/team/", urlKey: "join" };
+		const result = withFixture(EMPTY_TEAM, EMPTY_ROSTER, { pagesValue: pages });
+		assert.equal(result.ok, false);
+		const errors = result.errors.join("\n");
+		assert.match(errors, /routes\.foundationDonate/);
+		assert.match(errors, /routes\.newsletterArchive/);
+		assert.match(errors, /home\.heroJoin\.href/);
+	});
+
+	it("rejects a prepared photograph that is not in the repository", () => {
+		const pages = structuredClone(FIXTURE_PAGES);
+		pages.about.photo = { id: "../secret", alt: "Fixture" };
+		pages.donate.photo = { id: "missing-photo", alt: "Fixture" };
+		const result = withFixture(EMPTY_TEAM, EMPTY_ROSTER, { pagesValue: pages });
+		assertFails(result, /about\.photo\.id/);
+		assertFails(result, /donate\.photo\.id/);
+	});
+
+	it("rejects a non-string thumbnail alt and alt text without an image", () => {
+		assertFails(
+			withFixture(EMPTY_TEAM, EMPTY_ROSTER, {
+				videoImage: "fixture.jpg",
+				videosValue: {
+					...EMPTY_VIDEOS,
+					highlights: [{
+						title: "Fixture",
+						url: "https://example.com/highlights",
+						thumbnail: "/assets/images/videos/fixture.jpg",
+						thumbnailWidth: 960,
+						thumbnailHeight: 540,
+						thumbnailAlt: 12,
+					}],
+				},
+			}),
+			/thumbnailAlt/
+		);
+		assertFails(
+			withFixture(EMPTY_TEAM, EMPTY_ROSTER, {
+				videosValue: {
+					...EMPTY_VIDEOS,
+					highlights: [{
+						title: "Fixture",
+						url: "https://example.com/highlights",
+						thumbnailAlt: "IMUF CMS LOCAL TEST",
+					}],
+				},
+			}),
+			/Alt text requires a thumbnail image/
+		);
+	});
+
+	it("passes editable thumbnail alt text for an existing image", () => {
+		const result = withFixture(EMPTY_TEAM, EMPTY_ROSTER, {
+			videoImage: "fixture.jpg",
+			videosValue: {
+				...EMPTY_VIDEOS,
+				highlights: [{
+					title: "Fixture",
+					url: "https://example.com/highlights",
+					thumbnail: "/assets/images/videos/fixture.jpg",
+					thumbnailWidth: 960,
+					thumbnailHeight: 540,
+					thumbnailAlt: "IMUF CMS LOCAL TEST",
+				}],
+			},
+		});
+		assert.equal(result.ok, true, result.errors.join("\n"));
+	});
+
+	it("rejects an unsafe site URL", () => {
+		const site = structuredClone(FIXTURE_SITE);
+		site.urls.store = "javascript:alert(1)";
+		assertFails(withFixture(EMPTY_TEAM, EMPTY_ROSTER, { siteValue: site }), /urls\.store/);
 	});
 });

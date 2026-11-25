@@ -1,8 +1,8 @@
 <!DOCTYPE html>
 <html lang="en"><head>
 <meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1"><meta name="robots" content="noindex, nofollow"><meta name="theme-color" content="#900c22">
-<title>{% if title %}{{ title }} · {% endif %}Indiana Men's Ultimate</title>
-<meta name="description" content="Meet the HoosierMama?s, explore the Team Hub and stay connected through the Indiana Men's Ultimate Foundation.">
+<title>{% if title %}{{ title }} · {% endif %}{{ site.name | plain | safe }}</title>
+<meta name="description" content="{{ pages.meta.description | plain | safe }}">
 <link rel="preload" href="/assets/fonts/barlow-condensed-800.ttf" as="font" type="font/ttf" crossorigin><link rel="stylesheet" href="/assets/css/fonts.css"><link rel="stylesheet" href="/assets/css/site.css">{% if navId == 'home' %}<link rel="stylesheet" href="/assets/css/home-editorial.css?v=23">{% endif %}
 {% if navId == 'home' %}<link rel="preload" href="/assets/images/quigs-cutout-v1.webp" as="image">{% endif %}
 </head><body class="{{ bodyClass or '' }}"><a class="skip-link" href="#main">Skip to content</a>

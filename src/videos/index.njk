@@ -9,20 +9,20 @@ bodyClass: videos-page
   <a class="video-link" href="{{ item.url }}">
     {% if item.thumbnail %}
       <span class="video-thumb">
-        <img src="{{ item.thumbnail }}" width="{{ item.thumbnailWidth }}" height="{{ item.thumbnailHeight }}" alt="" loading="lazy" decoding="async">
+        <img src="{{ item.thumbnail }}" width="{{ item.thumbnailWidth }}" height="{{ item.thumbnailHeight }}" alt="{{ item.thumbnailAlt or '' }}" loading="lazy" decoding="async">
       </span>
     {% endif %}
     <span class="video-title">{{ item.title }}</span>
   </a>
   {% if item.note %}<p class="video-note">{{ item.note }}</p>{% endif %}
-  {% if action %}<a class="video-action" href="{{ item.url }}">Watch Kip's Callahan film</a>{% endif %}
+  {% if action %}<a class="video-action" href="{{ item.url }}">{{ pages.videos.callahanAction | plain | safe }}</a>{% endif %}
 </li>
 {% endmacro %}
 <article class="page">
   <header class="page-header">
-    <p class="eyebrow">ALUMNI & HISTORY / THE ARCHIVE</p>
-    <h1>Video archive.</h1>
-    <p class="lede">Callahan films, highlights and the moments that stay with the team.</p>
+    <p class="eyebrow">{{ pages.videos.eyebrow | loose | safe }}</p>
+    <h1>{{ pages.videos.heading | plain | safe }}</h1>
+    <p class="lede">{{ pages.videos.lede | plain | safe }}</p>
   </header>
   <div class="filter-bar" data-video-filters role="group" aria-label="Video categories" hidden>
     <button type="button" data-video-filter="Callahan" aria-pressed="false">Callahan</button>
@@ -38,7 +38,7 @@ bodyClass: videos-page
         {% endfor %}
       </ul>
     {% else %}
-      <p class="content-pending">No Callahan films are listed yet.</p>
+      <p class="content-pending">{{ pages.videos.emptyCallahan | plain | safe }}</p>
     {% endif %}
   </section>
   <section class="video-panel" data-video-panel="Highlights" aria-labelledby="video-highlights">
@@ -50,7 +50,7 @@ bodyClass: videos-page
         {% endfor %}
       </ul>
     {% else %}
-      <p class="content-pending">No highlights are listed yet.</p>
+      <p class="content-pending">{{ pages.videos.emptyHighlights | plain | safe }}</p>
     {% endif %}
   </section>
   <section class="video-panel" data-video-panel="Lowlights" aria-labelledby="video-lowlights">
@@ -62,8 +62,8 @@ bodyClass: videos-page
         {% endfor %}
       </ul>
     {% else %}
-      <p class="content-pending">No lowlights are listed yet.</p>
+      <p class="content-pending">{{ pages.videos.emptyLowlights | plain | safe }}</p>
     {% endif %}
   </section>
-  <p class="video-archive"><a href="https://www.hoosiermamas.org/videos">Visit the existing video archive</a></p>
+  <p class="video-archive"><a href="{{ pages.videos.archiveLink | linkHref(site.urls, pages.routes) }}">{{ pages.videos.archiveLink.label | plain | safe }}</a></p>
 </article>

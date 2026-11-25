@@ -10,6 +10,57 @@ export default function (eleventyConfig) {
 		autoescape: true,
 	});
 
+	// Escape markup but leave apostrophes as authored. Previously hard-coded
+	// copy used a raw apostrophe; Nunjucks would otherwise write &#39;.
+	eleventyConfig.addFilter("plain", (value) =>
+		String(value ?? "")
+			.replaceAll("&", "&amp;")
+			.replaceAll("<", "&lt;")
+			.replaceAll(">", "&gt;")
+			.replaceAll('"', "&quot;"),
+	);
+
+	// The history, video, and newsletter eyebrows were authored with a raw
+	// ampersand. Escaping it would change the saved HTML.
+	eleventyConfig.addFilter("loose", (value) =>
+		String(value ?? "")
+			.replaceAll("<", "&lt;")
+			.replaceAll(">", "&gt;")
+			.replaceAll('"', "&quot;"),
+	);
+
+	eleventyConfig.addFilter("linkHref", (link, urls, routes) => {
+		if (!link || typeof link !== "object") {
+			return "";
+		}
+
+		if (typeof link.urlKey === "string" && urls && typeof urls[link.urlKey] === "string") {
+			return urls[link.urlKey];
+		}
+
+		if (typeof link.route === "string" && routes && typeof routes[link.route] === "string") {
+			return routes[link.route];
+		}
+
+		return "";
+	});
+
+	eleventyConfig.addFilter("linkHref", (link, urls, routes) => {
+		if (!link || typeof link !== "object") {
+			return "";
+		}
+
+		if (typeof link.urlKey === "string" && urls && typeof urls[link.urlKey] === "string") {
+			return urls[link.urlKey];
+		}
+
+		if (typeof link.route === "string" && routes && typeof routes[link.route] === "string") {
+			return routes[link.route];
+		}
+
+		return "";
+	});
+
 	eleventyConfig.addPassthroughCopy("src/assets/css");
 	eleventyConfig.addPassthroughCopy("src/assets/fonts");
 	eleventyConfig.addPassthroughCopy("src/assets/js");

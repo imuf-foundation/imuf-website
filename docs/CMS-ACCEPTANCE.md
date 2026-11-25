@@ -1,83 +1,62 @@
 # CMS acceptance
 
-Record of what an ordinary editor can change, what was proven locally, and what still requires hosted Pages CMS. Editing a JSON file on this computer is not a hosted CMS test. No hosted test was performed in this pass because no IMUF GitHub or Netlify account is available here.
+What an ordinary editor can change, what was proven on this computer, and what still needs hosted Pages CMS. A local JSON edit is not a hosted CMS test. No hosted test was performed. GitHub, Netlify, and Pages CMS are not connected.
 
-Checked on November 24, 2026. Original `team.json` and `board.json` bytes were restored after the local fixtures, and a second build confirmed the test strings were gone.
+Checked on November 24, 2026. Labeled fixtures were removed and the original `pages.json`, `history.json`, and `videos.json` bytes were restored. The nine launch pages then matched the saved HTML baseline byte for byte.
 
-## Editing connection
+## Editable content
 
 | Content | Source file | CMS field | Consuming template | Local test | Hosted test | Remaining issue |
 | --- | --- | --- | --- | --- | --- | --- |
-| Team introduction | `src/_data/team.json` | Team Information → Team introduction (`intro`) | `src/team/index.njk` | Passed. A labeled fixture rendered in `/team/` and was removed. | Not performed | Hosted save, GitHub commit, and Netlify rebuild are unproven. |
-| Join text | `src/_data/team.json` | Join the Team text (`joinText`) | `src/team/index.njk` | Not separately fixture-tested. Empty value shows the pending notice. | Not performed | Recruiting instructions are still unsupplied. |
-| Recruiting email | `src/_data/team.json` | Recruiting email (`recruitingEmail`) | `src/team/index.njk` | Not separately fixture-tested. Blank value links to Contact. | Not performed | No approved address. The CMS pattern allows blank or one email. |
-| Team updated date | `src/_data/team.json` | Last updated (`updatedOn`) | `src/team/index.njk` | Schema matches the template. Blank omits the line. | Not performed | None in the template. |
-| Practices | `src/_data/team.json` | Practices (`when`, `where`, `note`) | `src/team/index.njk` | Passed. One labeled practice rendered, then the file was restored to an empty list. | Not performed | Real practice details are not supplied. |
-| Leadership | `src/_data/team.json` | Team leadership (`name`, `role`, `title`) | `src/team/index.njk` | Schema matches. The empty list shows the pending notice. | Not performed | Role choices are only Captain, Officer, or Coach. |
-| Roster | `src/_data/roster.json` | Roster (`season`, `updatedOn`, `players`) | `src/team/roster.njk` | Schema matches. Empty players show the unpublished notice. | Not performed | Deferred from the nine-page launch. Do not invent players. |
-| Schedule | `src/_data/schedule.json` | Season Schedule (`season`, `events`) | `src/team/schedule.njk` | Schema matches. Empty events show the pending notice. | Not performed | Deferred from the nine-page launch. |
-| Board records | `src/_data/board.json` | IMUF Board → members (`name`, `role`, `classYear`) | `src/imuf-board/index.njk` | Passed. A labeled fixture member rendered and was removed. | Not performed | Published roles still need confirmation. No biographies. |
-| History chapters, captions, and figures | `src/_data/history.json` | None | `src/history/index.njk` | Existing chapters render. No fixture was written into history. | Not performed | Not in `.pages.yml`. A partial schema could drop blocks on save, so it was not added. The opening photograph is whichever figure uses `/assets/images/history/woodlawn.jpg`. |
-| Video records | `src/_data/videos.json` | Video Archive → Callahan, Highlights, Lowlights (`title`, `url`, `note`) | `src/videos/index.njk` | Existing titles and https links render. | Not performed | The single Callahan entry also shows the hard-coded label “Watch Kip's Callahan film”. |
-| Video thumbnails | `src/_data/videos.json` and `src/assets/images/videos/` | Thumbnail path, width, and height as text and numbers | `src/videos/index.njk` | Passed for the existing Callahan image path, width 960, and height 639. | Not performed | The field is a string path, not an image picker. Alt text is hard-coded as empty. |
-| Public social and store links | `src/_data/site.json` `urls` | None | `src/_includes/partials/footer.njk` and `footer-home.njk` | Existing URLs render. | Not performed | Not in `.pages.yml`. A partial schema was not added because a Pages save could drop the rest of `site.json`. |
-| Contact page | Hard-coded in `src/contact-us/index.njk` | None | That template | Not a JSON field. | Not performed | Destination remains `https://www.hoosiermamas.org/contact-us/`. |
-| Donation page | Hard-coded in `src/donate-now/index.njk` | None | That template | Not a JSON field. | Not performed | Destination remains the current public donate page. The photograph is a fixed template asset. |
-| About IMUF copy and values | Hard-coded in `src/about-imuf/index.njk` | None | That template | Not a JSON field. | Not performed | Ordinary editors cannot change this copy or its photograph through CMS. |
-| Newsletter archive link | Hard-coded in `src/newsletters/index.njk` and the footers | None | Those templates | Signup control is disabled and does not submit. | Not performed | No CMS field and no approved form. |
-| Homepage words, links, and art | Hard-coded in `src/index.njk` and homepage CSS | None | `src/index.njk` | Frozen. Not edited. | Not performed | Launch link cleanup is recorded in `docs/RELEASE-PLAN.md` and was not implemented. |
-| Header labels | Hard-coded in `src/_includes/partials/header.njk` | None | Shared header | Not edited. | Not performed | Proposed launch navigation is not the current header. `site.json` `nav` is not what the header renders. |
+| Team introduction, join text, recruiting email, practices, leadership | `src/_data/team.json` | Team Information | `src/team/index.njk` | Passed earlier for the introduction and one practice. Restored. | Not performed | Recruiting text and practice details are still blank. |
+| Roster and schedule | `src/_data/roster.json`, `src/_data/schedule.json` | Roster, Season Schedule | `src/team/roster.njk`, `src/team/schedule.njk` | Schema matches. Records stay empty. | Not performed | Deferred from the nine-page launch. |
+| Board records | `src/_data/board.json` | IMUF Board | `src/imuf-board/index.njk` | Passed earlier for one labeled member. Restored. | Not performed | Published roles are unconfirmed. |
+| Shared addresses | `src/_data/site.json` `urls` | Site settings → Shared addresses | Header, footer, and links that use `urlKey` | Existing addresses render. An unsafe store URL is rejected by validation. | Not performed | `site.nav` is kept so a save does not delete it. It is not the header. |
+| Page routes, including foundation contact, donation destination, newsletter archive, and video archive | `src/_data/pages.json` `routes` | Pages → Page routes | Header, footer, homepage, contact, donate, newsletters, videos | Passed. The donation address was temporarily `https://example.com/imuf-cms-local-test` and then restored. | Not performed | These are the only copies of those addresses. |
+| Header labels and navigation | `src/_data/pages.json` `header`, `navigation` | Pages → Header, Navigation | `src/_includes/partials/header.njk` | Passed. The Team label rendered as `IMUF CMS LOCAL TEST nav`, then restored. | Not performed | The Team highlight rule stays in the template. |
+| Footer labels and newsletter note | `src/_data/pages.json` `footer` | Pages → Footer | `footer.njk`, `footer-home.njk` | Passed. The signup note rendered, and both subscribe buttons stayed disabled. | Not performed | Signup still does not submit. The homepage and interior footers stay separate. |
+| Homepage headings, copy, and actions | `src/_data/pages.json` `home` | Pages → Homepage copy | `src/index.njk` | Passed for the tagline. Restored. | Not performed | Athlete artwork is not a field. |
+| About introduction, values, and photograph | `src/_data/pages.json` `about` | Pages → About IMUF | `src/about-imuf/index.njk` | Passed for the introduction, one value label, and the photograph alt text. | Not performed | The photograph is a prepared 640/960/1600 stem, not one uploaded file. |
+| Contact copy and destination | `src/_data/pages.json` `contact` and `routes.foundationContact` | Pages → Contact | `src/contact-us/index.njk` | Passed. Restored. | Not performed | The approved destination is still the current public contact page. |
+| Donate copy and destination | `src/_data/pages.json` `donate` and `routes.foundationDonate` | Pages → Donate | `src/donate-now/index.njk` | Passed for the sentence and the destination. Restored. | Not performed | The page has no payment form. |
+| Newsletter introduction and archive | `src/_data/pages.json` `newsletters` and `routes.newsletterArchive` | Pages → Newsletters | `src/newsletters/index.njk` | Passed. Restored. | Not performed | No signup form is connected. |
+| History heading | `src/_data/pages.json` `history` | Pages → History page heading | `src/history/index.njk` | Passed. Restored. | Not performed | The opening photograph is still whichever figure uses `/assets/images/history/woodlawn.jpg`. |
+| History chapters, paragraphs, and captions | `src/_data/history.json` | Team History | `src/history/index.njk` | Passed for one chapter title, paragraph, and caption. Restored. | Not performed | Block types stay `p`, `h3`, `h4`, `quote`, and `figure`. |
+| Video records | `src/_data/videos.json` | Video Archive | `src/videos/index.njk` | Passed for one title. Restored. | Not performed | Links must stay https. |
+| Video page heading and archive link | `src/_data/pages.json` `videos` | Pages → Video page heading | `src/videos/index.njk` | Passed for the introduction. Restored. | Not performed | Category filter labels stay in the template because the script matches them. |
+| Video thumbnail and alt text | `src/_data/videos.json` `thumbnail`, `thumbnailAlt`, width, height | Video Archive → Thumbnail, an image field | `src/videos/index.njk` | Passed. The existing Callahan file rendered with alt text `IMUF CMS LOCAL TEST image`, then the alt was removed. | Not performed | Width and height are still typed numbers. |
+| History figure image and alt text | `src/_data/history.json` figure `src`, `alt`, `width`, `height`, `caption` | Team History → Image | `src/history/index.njk` | The existing figure path still renders. Alt and caption are editable text. A hosted image picker was not opened. | Not performed | Width and height are still typed numbers. |
 
-No schema or template mismatch required a code change. The configured JSON fields match the templates that read them. The gaps are content that was never given a CMS form.
+## Developer-managed
 
-## Hard-coded launch material
+These stay out of the editor:
 
-An ordinary editor cannot maintain these through the current forms:
+- Homepage athlete files, srcset, masks, backgrounds, motion, and section sizes. Quigs, Lucas, Steppa, and Collin are not interchangeable photographs.
+- CSS, class names, and the header rule that highlights Team on team pages.
+- `noindex, nofollow`.
+- Disabled newsletter controls. Editors can change the note. They cannot turn on collection from this form.
+- Donate and contact pages do not gain a payment or message form from these fields.
+- The responsive sizes passed to the photo macro.
+- Video filter labels in `src/videos/index.njk` and `src/assets/js/navigation.js`.
 
-- Homepage sentences, section links, hero labels, and the athlete artwork.
-- Header group labels and destinations.
-- About IMUF introduction, IRS-status sentence, six value sections, and the opening photograph.
-- Contact and donate sentences and their outbound links.
-- Newsletter introduction and the ActiveCampaign archive link.
-- Footer wordmark and the “Indiana Men's Ultimate Foundation” image alt text.
-- History opening treatment tied to `woodlawn.jpg`.
-- Video thumbnail alt text, and the Callahan watch label used when that list has one entry.
-- Donate and several interior photographs chosen in the templates, including width and height written in the photo macro.
+## Local checks
 
-Layout positions, CSS, masks, and image effects are intentionally not CMS fields.
+Validation passed. The content tests passed, including the new boundaries for required launch copy, unsafe addresses, missing prepared photographs, and thumbnail alt text.
 
-## Media
+Labeled fixtures rendered on the pages that consume them. Original content was restored. All nine launch pages matched `/Users/davidwoods/Documents/IMUF-Backups/imuf-launch-html-20261124-215239`.
 
-`.pages.yml` sets the media input to `src/assets/images` and the public prefix to `/assets/images`.
+## Images
 
-What that does today:
-
-- An editor cannot select an existing image from a content field. Thumbnail and history paths are plain text. History is not in the CMS at all.
-- An editor cannot upload a new image through a content field. A hosted media library might still store files under `src/assets/images` after Pages CMS is connected, but that library was not opened and is not attached to these fields.
-- Width, height, and alt are not read from the file. Video entries need `thumbnailWidth` and `thumbnailHeight` typed by hand. Video alt text is always empty. History figures store `alt`, `width`, and `height` inside each figure block.
-- Uploads are not optimized by this project. Eleventy copies files in `src/assets/images` through unchanged. There is no image-processing dependency. Preparation stays manual.
-
-Selecting or uploading an image was not tested in hosted Pages CMS.
+| Question | What is true now |
+| --- | --- |
+| Existing-image selection | Video thumbnails and history figures use a Pages CMS `image` field. The value stored in JSON is the public path string the template already prints, such as `/assets/images/videos/772531269.jpg`. Choosing a file that is already in the repository is the intended hosted behavior. This pass proved the path and alt text render. It did not open the hosted picker. About, donate, and homepage foundation photographs use a prepared image stem because the page needs the 640, 960, and 1600 files together. |
+| New-image uploads | The media folder is `src/assets/images`, published at `/assets/images`. A hosted Pages upload would put a file there. No upload was performed. |
+| Image optimization | Not implemented. Eleventy copies the file unchanged. There is no image-processing dependency. Width, height, and the prepared responsive sets are still entered or supplied by hand. |
 
 ## Hosted workflow
 
 | Step | Result | Evidence |
 | --- | --- | --- |
-| A. Edit one real text field in Pages CMS | Not performed | No IMUF GitHub repository or Pages CMS project is connected. |
-| B. Save and verify the GitHub change | Not performed | `git remote` is empty. The `gh` command is not installed. |
-| C. Netlify builds automatically | Not performed | The `netlify` command is not installed. No site exists here. |
-| D. Deployed page shows the saved value | Not performed | No review URL. |
-| E. Edit one structured record in Pages CMS | Not performed | Same account gap. The local board fixture does not count. |
-| F. Select or upload an image and verify it | Not performed | No image field and no hosted library test. |
-| G. Restore the original values through CMS | Not performed | Local fixtures were restored from the original file bytes, not through CMS. |
-| H. Restoration deploys successfully | Not performed | No review deployment. |
+| A–H | Not performed | No IMUF GitHub repository, Pages CMS project, or Netlify review site is connected. |
 
-A second person has not used the editor. That exercise is not complete.
-
-## What must happen before the hosted proof
-
-1. An IMUF-owned GitHub organization creates the website repository. Do not use a personal account as the owner.
-2. Push this baseline to that repository.
-3. An IMUF-owned Netlify account creates a site from that repository, with `npm run build`, publish directory `_site`, and Node 24, as `netlify.toml` already says. Use the generated `netlify.app` address. Do not attach the production domain. Leave `noindex` in place.
-4. Hosted Pages CMS is opened against that repository so `.pages.yml` is the editor configuration.
-5. Repeat steps A–H on the review site, then restore the original text and record through the same editor.
+A second person has not used the editor.

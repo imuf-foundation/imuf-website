@@ -6,13 +6,13 @@ bodyClass: support-page newsletters-page
 ---
 <article class="page">
   <header class="page-header">
-    <p class="eyebrow">ALUMNI & HISTORY</p>
-    <h1>Newsletters.</h1>
+    <p class="eyebrow">{{ pages.newsletters.eyebrow | loose | safe }}</p>
+    <h1>{{ pages.newsletters.heading | plain | safe }}</h1>
   </header>
   <div class="support-section">
-    <p class="support-prose">Team updates and news from the Indiana Men's Ultimate Foundation.</p>
-    <a class="button button-dark" href="https://maxklaben.activehosted.com/archive/1">Read past newsletters</a>
-    <p class="support-note">Signup is not available on this page yet.</p>
-    <a class="text-link" href="/contact-us/">Contact</a>
+    <p class="support-prose">{{ pages.newsletters.introduction | plain | safe }}</p>
+    <a class="button button-dark" href="{{ pages.newsletters.archiveButton | linkHref(site.urls, pages.routes) }}">{{ pages.newsletters.archiveButton.label | plain | safe }}</a>
+    <p class="support-note">{{ pages.newsletters.note | plain | safe }}</p>
+    <a class="text-link" href="{{ pages.newsletters.contactLink | linkHref(site.urls, pages.routes) }}">{{ pages.newsletters.contactLink.label | plain | safe }}</a>
   </div>
 </article>

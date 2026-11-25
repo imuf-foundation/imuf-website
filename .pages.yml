@@ -199,8 +199,12 @@ content:
             type: text
           - name: thumbnail
             label: Thumbnail
+            type: image
+            description: Optional. Select an existing repository image. The saved value is its public path, such as /assets/images/videos/example.jpg. A hosted upload is stored under src/assets/images and is not resized or compressed by this project.
+          - name: thumbnailAlt
+            label: Thumbnail alt text
             type: string
-            description: Optional path under /assets/images/videos/ for this film's own thumbnail. Leave blank to show the title without an image.
+            description: Optional. Leave blank when the title already names the film.
           - name: thumbnailWidth
             label: Thumbnail width
             type: number
@@ -233,8 +237,12 @@ content:
             type: text
           - name: thumbnail
             label: Thumbnail
+            type: image
+            description: Optional. Select an existing repository image. The saved value is its public path, such as /assets/images/videos/example.jpg. A hosted upload is stored under src/assets/images and is not resized or compressed by this project.
+          - name: thumbnailAlt
+            label: Thumbnail alt text
             type: string
-            description: Optional path under /assets/images/videos/ for this film's own thumbnail. Leave blank to show the title without an image.
+            description: Optional. Leave blank when the title already names the film.
           - name: thumbnailWidth
             label: Thumbnail width
             type: number
@@ -267,8 +275,12 @@ content:
             type: text
           - name: thumbnail
             label: Thumbnail
+            type: image
+            description: Optional. Select an existing repository image. The saved value is its public path, such as /assets/images/videos/example.jpg. A hosted upload is stored under src/assets/images and is not resized or compressed by this project.
+          - name: thumbnailAlt
+            label: Thumbnail alt text
             type: string
-            description: Optional path under /assets/images/videos/ for this film's own thumbnail. Leave blank to show the title without an image.
+            description: Optional. Leave blank when the title already names the film.
           - name: thumbnailWidth
             label: Thumbnail width
             type: number
@@ -309,4 +321,480 @@ content:
             label: Class year
             type: string
             description: Four-digit class year, or leave blank.
+
+  - name: site
+    label: Site settings
+    type: file
+    path: src/_data/site.json
+    format: json
+    operations:
+      create: false
+      rename: false
+      delete: false
+    fields:
+      - name: name
+        label: Site name
+        type: string
+        required: true
+        description: Used in the browser title. Plain text.
+      - name: shortName
+        label: Short name
+        type: string
+        required: true
+      - name: organization
+        label: Organization name
+        type: string
+        required: true
+        description: Alt text for the foundation marks.
+      - name: prototype
+        label: Prototype
+        type: boolean
+        description: Keep this on until the launch review. It does not change the visible pages.
+      - name: urls
+        label: Shared addresses
+        type: object
+        fields:
+          - { name: home, label: Home, type: string, required: true }
+          - { name: team, label: Team Hub, type: string, required: true }
+          - { name: join, label: Join the Team, type: string, required: true }
+          - { name: roster, label: Roster, type: string, required: true }
+          - { name: donate, label: Donate page, type: string, required: true }
+          - { name: contact, label: Contact page, type: string, required: true }
+          - { name: store, label: Store, type: string, required: true }
+          - { name: instagram, label: Instagram, type: string, required: true }
+          - { name: facebook, label: Facebook, type: string, required: true }
+          - { name: x, label: X, type: string, required: true }
+      - name: nav
+        label: Unused legacy list
+        type: object
+        description: Not shown on the site. The header reads Pages → Navigation. Keep these entries so a save does not delete them.
+        list:
+          collapsible:
+            collapsed: true
+            summary: "{label}"
+        fields:
+          - { name: id, label: Id, type: string, required: true }
+          - { name: label, label: Label, type: string, required: true }
+          - { name: href, label: Address, type: string, required: true }
+
+  - name: history
+    label: Team History
+    type: file
+    path: src/_data/history.json
+    format: json
+    operations:
+      create: false
+      rename: false
+      delete: false
+    fields:
+      - name: chapters
+        label: Chapters
+        type: object
+        list:
+          collapsible:
+            collapsed: true
+            summary: "{title}"
+        fields:
+          - name: id
+            label: Chapter id
+            type: string
+            required: true
+            description: Letters, numbers, hyphens, and underscores. This is the in-page link.
+          - name: title
+            label: Title
+            type: string
+            required: true
+          - name: blocks
+            label: Blocks
+            type: object
+            list:
+              collapsible:
+                collapsed: true
+                summary: "{type}"
+            fields:
+              - name: type
+                label: Block type
+                type: select
+                required: true
+                options:
+                  values:
+                    - p
+                    - h3
+                    - h4
+                    - quote
+                    - figure
+              - name: text
+                label: Text
+                type: text
+                description: Paragraph, heading, or quote text. Leave this unset when a paragraph uses text runs.
+              - name: runs
+                label: Text runs
+                type: object
+                description: Optional linked parts of a paragraph. Do not add runs when Text is used.
+                list:
+                  collapsible:
+                    collapsed: true
+                    summary: "{text}"
+                fields:
+                  - { name: text, label: Text, type: string, required: true }
+                  - name: href
+                    label: Link
+                    type: string
+                    description: Optional https URL, local route, or fragment.
+              - name: src
+                label: Image
+                type: image
+                description: Figure blocks only. Select an existing repository image. The saved value stays the public path. Uploads are not optimized.
+              - { name: width, label: Width, type: number }
+              - { name: height, label: Height, type: number }
+              - name: alt
+                label: Alt text
+                type: string
+                description: Required for a figure.
+              - name: caption
+                label: Caption
+                type: text
+              - name: captionRuns
+                label: Caption runs
+                type: object
+                description: Use this instead of Caption when part of the caption is a link.
+                list:
+                  collapsible:
+                    collapsed: true
+                    summary: "{text}"
+                fields:
+                  - { name: text, label: Text, type: string, required: true }
+                  - name: href
+                    label: Link
+                    type: string
+                    description: Optional https URL, local route, or fragment.
+
+  - name: pages
+    label: Pages
+    type: file
+    path: src/_data/pages.json
+    format: json
+    operations:
+      create: false
+      rename: false
+      delete: false
+    fields:
+      - name: meta
+        label: Site description
+        type: object
+        fields:
+          - name: description
+            label: Description
+            type: text
+            required: true
+      - name: routes
+        label: Page routes
+        type: object
+        description: Each address is stored once. Navigation and page buttons point here or at Site settings.
+        fields:
+          - { name: about, label: About IMUF, type: string, required: true }
+          - { name: board, label: IMUF Board, type: string, required: true }
+          - { name: history, label: Team History, type: string, required: true }
+          - { name: videos, label: Video Archive, type: string, required: true }
+          - { name: newsletters, label: Newsletters, type: string, required: true }
+          - { name: schedule, label: Season Schedule, type: string, required: true }
+          - { name: resources, label: Player Resources, type: string, required: true }
+          - { name: resourcesBasics, label: Ultimate basics, type: string, required: true }
+          - { name: practices, label: Practices, type: string, required: true }
+          - { name: scholarship, label: Mike Moore Scholarship, type: string, required: true }
+          - { name: foundationContact, label: Foundation contact, type: string, required: true }
+          - { name: foundationDonate, label: Donation destination, type: string, required: true }
+          - { name: newsletterArchive, label: Newsletter archive, type: string, required: true }
+          - { name: videoArchive, label: Existing video archive, type: string, required: true }
+      - name: header
+        label: Header
+        type: object
+        fields:
+          - { name: homeAriaLabel, label: Home link label, type: string, required: true }
+          - { name: wordmarkLine1, label: Wordmark line 1, type: string, required: true }
+          - { name: wordmarkLine2, label: Wordmark line 2, type: string, required: true }
+          - { name: navLabel, label: Navigation label, type: string, required: true }
+          - { name: donateLabel, label: Donate label, type: string, required: true }
+      - name: navigation
+        label: Navigation
+        type: object
+        fields:
+          - name: groups
+            label: Groups
+            type: object
+            list:
+              collapsible:
+                collapsed: true
+                summary: "{label}"
+            fields:
+              - name: id
+                label: Id
+                type: string
+                required: true
+                description: Keep the Team group id as team. That id controls which pages highlight the group.
+              - { name: label, label: Label, type: string, required: true }
+              - name: links
+                label: Links
+                type: object
+                list:
+                  collapsible:
+                    collapsed: true
+                    summary: "{label}"
+                fields:
+                  - { name: label, label: Label, type: string, required: true }
+                  - name: urlKey
+                    label: Site address
+                    type: string
+                    description: One of home, team, join, roster, donate, contact, store, instagram, facebook, or x. Leave blank when using a page route.
+                  - name: route
+                    label: Page route
+                    type: string
+                    description: A key from Page routes. Leave blank when using a site address.
+      - name: footer
+        label: Footer
+        type: object
+        fields:
+          - { name: nameLine1, label: Name line 1, type: string, required: true }
+          - { name: nameLine2, label: Name line 2, type: string, required: true }
+          - { name: promptLine1, label: Prompt line 1, type: string, required: true }
+          - { name: promptLine2, label: Prompt line 2, type: string, required: true }
+          - { name: signupAriaLabel, label: Signup group label, type: string, required: true }
+          - { name: signupLabel, label: Signup label, type: string, required: true }
+          - { name: emailPlaceholder, label: Email placeholder, type: string, required: true }
+          - { name: subscribeLabel, label: Subscribe button, type: string, required: true }
+          - { name: homeSubscribeAriaLabel, label: Homepage subscribe description, type: string, required: true }
+          - { name: signupNote, label: Signup note, type: string, required: true }
+          - name: archiveLink
+            label: Past newsletters link
+            type: object
+            fields:
+              - { name: label, label: Label, type: string, required: true }
+              - { name: route, label: Page route, type: string, required: true }
+          - name: foundationRoute
+            label: Foundation mark route
+            type: string
+            required: true
+            description: A key from Page routes. The mark image itself stays in the template.
+          - { name: navLabel, label: Footer navigation label, type: string, required: true }
+          - { name: donateLabel, label: Donate, type: string, required: true }
+          - { name: contactLabel, label: Contact, type: string, required: true }
+          - { name: storeLabel, label: Store, type: string, required: true }
+          - { name: instagramLabel, label: Instagram, type: string, required: true }
+          - { name: facebookLabel, label: Facebook, type: string, required: true }
+          - { name: xLabel, label: X, type: string, required: true }
+      - name: home
+        label: Homepage copy
+        type: object
+        description: Headings, supporting copy, and action labels. Athlete artwork, masks, and section layout stay in the templates.
+        fields:
+          - { name: location, label: Location, type: string, required: true }
+          - { name: university, label: University, type: string, required: true }
+          - { name: titleLine1, label: Title line 1, type: string, required: true }
+          - { name: titleLine2, label: Title line 2, type: string, required: true }
+          - { name: tagline, label: Tagline, type: string, required: true }
+          - name: heroJoin
+            label: Hero join link
+            type: object
+            fields:
+              - { name: label, label: Label, type: string, required: true }
+              - { name: urlKey, label: Site address, type: string }
+              - { name: route, label: Page route, type: string }
+          - name: heroHub
+            label: Hero Team Hub link
+            type: object
+            fields:
+              - { name: label, label: Label, type: string, required: true }
+              - { name: urlKey, label: Site address, type: string }
+              - { name: route, label: Page route, type: string }
+          - { name: recruitLead, label: Recruit lead, type: string, required: true }
+          - { name: recruitTitle, label: Recruit title, type: string, required: true }
+          - name: recruitJoin
+            label: Recruit join link
+            type: object
+            fields:
+              - { name: label, label: Label, type: string, required: true }
+              - { name: urlKey, label: Site address, type: string }
+              - { name: route, label: Page route, type: string }
+          - name: recruitNew
+            label: New to ultimate link
+            type: object
+            fields:
+              - { name: label, label: Label, type: string, required: true }
+              - { name: urlKey, label: Site address, type: string }
+              - { name: route, label: Page route, type: string }
+          - { name: hubLine1, label: Team heading line 1, type: string, required: true }
+          - { name: hubLine2, label: Team heading line 2, type: string, required: true }
+          - name: hubEntry
+            label: Team Hub link
+            type: object
+            fields:
+              - { name: label, label: Label, type: string, required: true }
+              - { name: urlKey, label: Site address, type: string }
+              - { name: route, label: Page route, type: string }
+          - { name: hubNavLabel, label: Team links label, type: string, required: true }
+          - name: hubLinks
+            label: Team links
+            type: object
+            list:
+              collapsible:
+                collapsed: true
+                summary: "{label}"
+            fields:
+              - { name: label, label: Label, type: string, required: true }
+              - { name: urlKey, label: Site address, type: string }
+              - { name: route, label: Page route, type: string }
+          - { name: foundationTitle, label: Foundation heading, type: string, required: true }
+          - name: foundationParagraphs
+            label: Foundation paragraphs
+            type: string
+            list: true
+            required: true
+          - { name: foundationNavLabel, label: Foundation links label, type: string, required: true }
+          - name: foundationLinks
+            label: Foundation links
+            type: object
+            list:
+              collapsible:
+                collapsed: true
+                summary: "{label}"
+            fields:
+              - { name: label, label: Label, type: string, required: true }
+              - { name: urlKey, label: Site address, type: string }
+              - { name: route, label: Page route, type: string }
+          - { name: foundationDonate, label: Support link label, type: string, required: true }
+          - { name: archiveLine1, label: Archive heading line 1, type: string, required: true }
+          - { name: archiveLine2, label: Archive heading line 2, type: string, required: true }
+          - name: archiveAction
+            label: Archive link
+            type: object
+            fields:
+              - { name: label, label: Label, type: string, required: true }
+              - { name: urlKey, label: Site address, type: string }
+              - { name: route, label: Page route, type: string }
+      - name: about
+        label: About IMUF
+        type: object
+        fields:
+          - { name: eyebrow, label: Eyebrow, type: string, required: true }
+          - { name: heading, label: Heading, type: string, required: true }
+          - name: introduction
+            label: Introduction
+            type: string
+            list: true
+            required: true
+          - name: photo
+            label: Photograph
+            type: object
+            description: Use the stem of a prepared 640, 960, and 1600 set, such as dsc07017. This is not a single uploaded file.
+            fields:
+              - { name: id, label: Image stem, type: string, required: true }
+              - { name: alt, label: Alt text, type: string, required: true }
+          - name: values
+            label: Values
+            type: object
+            list:
+              collapsible:
+                collapsed: true
+                summary: "{label}"
+            fields:
+              - { name: label, label: Label, type: string, required: true }
+              - { name: text, label: Text, type: text, required: true }
+          - { name: linksLabel, label: Related links label, type: string, required: true }
+          - name: links
+            label: Related links
+            type: object
+            list:
+              collapsible:
+                collapsed: true
+                summary: "{label}"
+            fields:
+              - { name: label, label: Label, type: string, required: true }
+              - { name: urlKey, label: Site address, type: string }
+              - { name: route, label: Page route, type: string }
+      - name: contact
+        label: Contact
+        type: object
+        fields:
+          - { name: heading, label: Heading, type: string, required: true }
+          - { name: foundationText, label: Foundation text, type: text, required: true }
+          - name: foundationButton
+            label: Foundation button
+            type: object
+            fields:
+              - { name: label, label: Label, type: string, required: true }
+              - { name: route, label: Page route, type: string, required: true }
+          - { name: playHeading, label: Play heading, type: string, required: true }
+          - { name: playText, label: Play text, type: text, required: true }
+          - name: playLink
+            label: Play link
+            type: object
+            fields:
+              - { name: label, label: Label, type: string, required: true }
+              - { name: urlKey, label: Site address, type: string }
+              - { name: route, label: Page route, type: string }
+      - name: donate
+        label: Donate
+        type: object
+        fields:
+          - { name: heading, label: Heading, type: string, required: true }
+          - { name: text, label: Text, type: text, required: true }
+          - name: button
+            label: Button
+            type: object
+            fields:
+              - { name: label, label: Label, type: string, required: true }
+              - { name: route, label: Page route, type: string, required: true }
+          - { name: note, label: Note, type: string, required: true }
+          - name: photo
+            label: Photograph
+            type: object
+            description: Prepared image stem and alt text. The page does not collect a payment.
+            fields:
+              - { name: id, label: Image stem, type: string, required: true }
+              - { name: alt, label: Alt text, type: string, required: true }
+      - name: newsletters
+        label: Newsletters
+        type: object
+        fields:
+          - { name: eyebrow, label: Eyebrow, type: string, required: true }
+          - { name: heading, label: Heading, type: string, required: true }
+          - { name: introduction, label: Introduction, type: text, required: true }
+          - name: archiveButton
+            label: Archive button
+            type: object
+            fields:
+              - { name: label, label: Label, type: string, required: true }
+              - { name: route, label: Page route, type: string, required: true }
+          - { name: note, label: Note, type: string, required: true }
+          - name: contactLink
+            label: Contact link
+            type: object
+            fields:
+              - { name: label, label: Label, type: string, required: true }
+              - { name: urlKey, label: Site address, type: string }
+              - { name: route, label: Page route, type: string }
+      - name: history
+        label: History page heading
+        type: object
+        fields:
+          - { name: eyebrow, label: Eyebrow, type: string, required: true }
+          - { name: heading, label: Heading, type: string, required: true }
+          - { name: navLabel, label: Chapter navigation label, type: string, required: true }
+      - name: videos
+        label: Video page heading
+        type: object
+        fields:
+          - { name: eyebrow, label: Eyebrow, type: string, required: true }
+          - { name: heading, label: Heading, type: string, required: true }
+          - { name: lede, label: Introduction, type: text, required: true }
+          - { name: callahanAction, label: Single Callahan action, type: string, required: true }
+          - name: archiveLink
+            label: Existing archive link
+            type: object
+            fields:
+              - { name: label, label: Label, type: string, required: true }
+              - { name: route, label: Page route, type: string, required: true }
+          - { name: emptyCallahan, label: Empty Callahan notice, type: string, required: true }
+          - { name: emptyHighlights, label: Empty highlights notice, type: string, required: true }
+          - { name: emptyLowlights, label: Empty lowlights notice, type: string, required: true }
 

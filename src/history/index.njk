@@ -25,9 +25,9 @@ bodyClass: history-page
 <article class="page">
   <header class="page-header history-opening">
     <div class="history-opening-copy">
-      <p class="eyebrow">ALUMNI & HISTORY</p>
-      <h1>Team history.</h1>
-      <nav class="history-nav" aria-label="History chapters">
+      <p class="eyebrow">{{ pages.history.eyebrow | loose | safe }}</p>
+      <h1>{{ pages.history.heading | plain | safe }}</h1>
+      <nav class="history-nav" aria-label="{{ pages.history.navLabel | plain | safe }}">
         {% for chapter in history.chapters %}
           <a href="#{{ chapter.id }}">{{ chapter.title }}</a>
         {% endfor %}

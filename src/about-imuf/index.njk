@@ -7,47 +7,30 @@ bodyClass: support-page about-page
 {% from "macros.njk" import photo %}
 <article class="page">
   <header class="page-header">
-    <p class="eyebrow">THE FOUNDATION</p>
-    <h1>About IMUF.</h1>
+    <p class="eyebrow">{{ pages.about.eyebrow | plain | safe }}</p>
+    <h1>{{ pages.about.heading | plain | safe }}</h1>
   </header>
   <div class="about-opening support-section">
     <div class="support-prose">
-      <p>Our goal is to develop highly competitive athletes, train future leaders, and foster a sense of community and teamwork.</p>
-      <p>We are an IRS-approved non-profit organization focused on supporting the Indiana Hoosiermama?s</p>
+      {%- for paragraph in pages.about.introduction %}
+      <p>{{ paragraph | plain | safe }}</p>
+      {%- endfor %}
     </div>
     <figure class="support-photo">
-      {{ photo('dsc07017','David, Evan and Rowland standing shoulder to shoulder in red Indiana jerseys','','(max-width: 800px) 100vw, 45vw',true) }}
+      {{ photo(pages.about.photo.id, pages.about.photo.alt, '', '(max-width: 800px) 100vw, 45vw', true) }}
     </figure>
   </div>
   <ul class="value-list support-section">
+    {%- for value in pages.about.values %}
     <li>
-      <h2 class="value-label">Creativity.</h2>
-      <p>In order for us to fulfill our mission, we need to think creatively. That’s why we are dedicated to crafting a culture that fosters unique, out-of-the-box thinkers. We aim to make ultimate at Indiana University a place for players to develop the skills to develop creative solutions in ultimate, and in life.</p>
+      <h2 class="value-label">{{ value.label | plain | safe }}</h2>
+      <p>{{ value.text | plain | safe }}</p>
     </li>
-    <li>
-      <h2 class="value-label">Inclusion.</h2>
-      <p>Ultimate should be a sport everyone can play. We aim to break down barriers to access in ultimate, and making sure that all students at Indiana University have the opportunity to succeed in the sport.</p>
-    </li>
-    <li>
-      <h2 class="value-label">Competitiveness.</h2>
-      <p>Competitiveness is at the heart of the sport. We want to create a place where players aspire to achieve greater and greater goals. We work to provide students who play ultimate at Indiana University a place where they can compete, while also developing important skills such as integrity and teamwork.</p>
-    </li>
-    <li>
-      <h2 class="value-label">Intensity.</h2>
-      <p>Ultimate is a sport that requires focus and energy, especially during the last moments of a long tournament weekend. That’s why we are helping cultivate a community that allows players to push their game to the next level. We aim to foster a passion for the sport both on and off the field.</p>
-    </li>
-    <li>
-      <h2 class="value-label">Discipline.</h2>
-      <p>Among the most important skills in ultimate - and in life - is a consistent effort towards team goals. We want to make ultimate at Indiana University a place where players learn the values of an effective team - accountability, teamwork, and dedication. We want to make players better at ultimate, while reinforcing skills that are applicable outside of the sport.</p>
-    </li>
-    <li>
-      <h2 class="value-label">Trust.</h2>
-      <p>Trust is our backbone. Our organization relies on trust to advance our on-the-field goals and our off-the-field plans. Trusting ourselves and trusting others is what allows us to keep moving forward.</p>
-    </li>
+    {%- endfor %}
   </ul>
-  <nav class="support-links" aria-label="Related foundation pages">
-    <a href="/imuf-board/">Board</a>
-    <a href="/history/">History</a>
-    <a href="/contact-us/">Contact</a>
+  <nav class="support-links" aria-label="{{ pages.about.linksLabel | plain | safe }}">
+    {%- for link in pages.about.links %}
+    <a href="{{ link | linkHref(site.urls, pages.routes) }}">{{ link.label | plain | safe }}</a>
+    {%- endfor %}
   </nav>
 </article>
