@@ -153,6 +153,20 @@ export function validateContent(projectRoot = defaultRoot) {
 		}
 	}
 
+	// Pages CMS drops an empty list instead of writing []. Null stays invalid.
+	function optionalArray(file, field, value) {
+		if (value === undefined) {
+			return [];
+		}
+
+		if (!Array.isArray(value)) {
+			addError(file, field, `Expected an array, received ${describeType(value)}.`);
+			return null;
+		}
+
+		return value;
+	}
+
 	function validateTeam(file, data) {
 		if (!isPlainObject(data)) {
 			addError(file, "(root)", `Expected a JSON object, received ${describeType(data)}.`);
@@ -164,47 +178,41 @@ export function validateContent(projectRoot = defaultRoot) {
 		assertOptionalEmail(file, "recruitingEmail", data.recruitingEmail);
 		assertOptionalIsoDate(file, "updatedOn", data.updatedOn);
 
-		if (!Array.isArray(data.practices)) {
-			addError(file, "practices", `Expected an array, received ${describeType(data.practices)}.`);
-		} else {
-			data.practices.forEach((practice, index) => {
-				const prefix = `practices[${index}]`;
+		const practices = optionalArray(file, "practices", data.practices);
+		practices?.forEach((practice, index) => {
+			const prefix = `practices[${index}]`;
 
-				if (!isPlainObject(practice)) {
-					addError(file, prefix, `Expected an object, received ${describeType(practice)}.`);
-					return;
-				}
+			if (!isPlainObject(practice)) {
+				addError(file, prefix, `Expected an object, received ${describeType(practice)}.`);
+				return;
+			}
 
-				assertRequiredString(file, `${prefix}.when`, practice.when);
-				assertRequiredString(file, `${prefix}.where`, practice.where);
-				assertOptionalString(file, `${prefix}.note`, practice.note);
-			});
-		}
+			assertRequiredString(file, `${prefix}.when`, practice.when);
+			assertRequiredString(file, `${prefix}.where`, practice.where);
+			assertOptionalString(file, `${prefix}.note`, practice.note);
+		});
 
-		if (!Array.isArray(data.leadership)) {
-			addError(file, "leadership", `Expected an array, received ${describeType(data.leadership)}.`);
-		} else {
-			data.leadership.forEach((person, index) => {
-				const prefix = `leadership[${index}]`;
+		const leadership = optionalArray(file, "leadership", data.leadership);
+		leadership?.forEach((person, index) => {
+			const prefix = `leadership[${index}]`;
 
-				if (!isPlainObject(person)) {
-					addError(file, prefix, `Expected an object, received ${describeType(person)}.`);
-					return;
-				}
+			if (!isPlainObject(person)) {
+				addError(file, prefix, `Expected an object, received ${describeType(person)}.`);
+				return;
+			}
 
-				assertRequiredString(file, `${prefix}.name`, person.name);
-				assertRequiredString(file, `${prefix}.role`, person.role);
-				assertOptionalString(file, `${prefix}.title`, person.title);
+			assertRequiredString(file, `${prefix}.name`, person.name);
+			assertRequiredString(file, `${prefix}.role`, person.role);
+			assertOptionalString(file, `${prefix}.title`, person.title);
 
-				if (typeof person.role === "string" && person.role.trim() !== "" && !LEADERSHIP_ROLES.has(person.role)) {
-					addError(
-						file,
-						`${prefix}.role`,
-						`Must be one of: Captain, Officer, Coach. Received "${person.role}".`
-					);
-				}
-			});
-		}
+			if (typeof person.role === "string" && person.role.trim() !== "" && !LEADERSHIP_ROLES.has(person.role)) {
+				addError(
+					file,
+					`${prefix}.role`,
+					`Must be one of: Captain, Officer, Coach. Received "${person.role}".`
+				);
+			}
+		});
 	}
 
 	function validateRoster(file, data) {
@@ -216,12 +224,8 @@ export function validateContent(projectRoot = defaultRoot) {
 		assertOptionalString(file, "season", data.season);
 		assertOptionalIsoDate(file, "updatedOn", data.updatedOn);
 
-		if (!Array.isArray(data.players)) {
-			addError(file, "players", `Expected an array, received ${describeType(data.players)}.`);
-			return;
-		}
-
-		data.players.forEach((player, index) => {
+		const players = optionalArray(file, "players", data.players);
+		players?.forEach((player, index) => {
 			const prefix = `players[${index}]`;
 
 			if (!isPlainObject(player)) {
@@ -243,12 +247,8 @@ export function validateContent(projectRoot = defaultRoot) {
 
 		assertOptionalString(file, "season", data.season);
 
-		if (!Array.isArray(data.events)) {
-			addError(file, "events", `Expected an array, received ${describeType(data.events)}.`);
-			return;
-		}
-
-		data.events.forEach((event, index) => {
+		const events = optionalArray(file, "events", data.events);
+		events?.forEach((event, index) => {
 			const prefix = `events[${index}]`;
 
 			if (!isPlainObject(event)) {

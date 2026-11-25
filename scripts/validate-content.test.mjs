@@ -1,8 +1,9 @@
 import assert from "node:assert/strict";
-import { mkdirSync, mkdtempSync, rmSync, writeFileSync } from "node:fs";
+import { mkdirSync, mkdtempSync, readFileSync, rmSync, writeFileSync } from "node:fs";
 import { tmpdir } from "node:os";
 import { dirname, join } from "node:path";
 import { describe, it } from "node:test";
+import { fileURLToPath } from "node:url";
 import { validateContent } from "./validate-content.mjs";
 
 const EMPTY_TEAM = {
@@ -323,21 +324,6 @@ describe("required fields", () => {
 		assertFails(withFixture({ ...EMPTY_TEAM, intro: "  " }, EMPTY_ROSTER), /src\/_data\/team\.json: intro/);
 	});
 
-	it("fails when practices is missing", () => {
-		const { practices, ...team } = EMPTY_TEAM;
-		assertFails(withFixture(team, EMPTY_ROSTER), /src\/_data\/team\.json: practices/);
-	});
-
-	it("fails when leadership is missing", () => {
-		const { leadership, ...team } = EMPTY_TEAM;
-		assertFails(withFixture(team, EMPTY_ROSTER), /src\/_data\/team\.json: leadership/);
-	});
-
-	it("fails when players is missing", () => {
-		const { players, ...roster } = EMPTY_ROSTER;
-		assertFails(withFixture(EMPTY_TEAM, roster), /src\/_data\/roster\.json: players/);
-	});
-
 	it("fails when a practice is missing when/where", () => {
 		const team = { ...EMPTY_TEAM, practices: [{ note: "only a note" }] };
 		const result = withFixture(team, EMPTY_ROSTER);
@@ -356,6 +342,84 @@ describe("required fields", () => {
 		assertFails(
 			withFixture(EMPTY_TEAM, { ...EMPTY_ROSTER, players: [{ year: "Jr" }] }),
 			/players\[0\]\.name/
+		);
+	});
+});
+
+describe("Pages CMS omitted optional fields", () => {
+	const hostedTeamJson = readFileSync(
+		join(dirname(fileURLToPath(import.meta.url)), "..", "src", "_data", "team.json"),
+		"utf8"
+	);
+	const hostedTeamDocument = `{
+  "intro": "Information for current and prospective Indiana men's ultimate players."
+}`;
+
+	it("passes the exact restored team.json, with no trailing newline", () => {
+		assert.equal(hostedTeamJson, hostedTeamDocument);
+		assert.equal(hostedTeamJson.endsWith("\n"), false);
+		assert.deepEqual(JSON.parse(hostedTeamJson), {
+			intro: "Information for current and prospective Indiana men's ultimate players.",
+		});
+		const result = withFixture(hostedTeamJson, EMPTY_ROSTER, { rawTeam: true });
+		assert.equal(result.ok, true, result.errors.join("\n"));
+	});
+
+	it("passes when optional strings and arrays are omitted", () => {
+		const result = withFixture(
+			{ intro: EMPTY_TEAM.intro },
+			{},
+			{ scheduleValue: {} }
+		);
+		assert.equal(result.ok, true, result.errors.join("\n"));
+		assert.deepEqual(result.errors, []);
+	});
+
+	it("fails when present optional fields have the wrong type", () => {
+		const result = withFixture(
+			{
+				intro: EMPTY_TEAM.intro,
+				joinText: 12,
+				recruitingEmail: false,
+				updatedOn: 20261124,
+				practices: null,
+				leadership: "Captain",
+			},
+			{ players: {} },
+			{ scheduleValue: { season: "", events: null } }
+		);
+		assertFails(result, /src\/_data\/team\.json: joinText — Expected a string, received number/);
+		assertFails(result, /src\/_data\/team\.json: recruitingEmail — Expected a string, received boolean/);
+		assertFails(result, /src\/_data\/team\.json: updatedOn — Expected a string, received number/);
+		assertFails(result, /src\/_data\/team\.json: practices — Expected an array, received null/);
+		assertFails(result, /src\/_data\/team\.json: leadership — Expected an array, received string/);
+		assertFails(result, /src\/_data\/roster\.json: players — Expected an array, received object/);
+		assertFails(result, /src\/_data\/schedule\.json: events — Expected an array, received null/);
+	});
+
+	it("still rejects invalid records inside present arrays", () => {
+		const result = withFixture(
+			{
+				intro: EMPTY_TEAM.intro,
+				practices: [{ note: "only a note" }, "nope"],
+				leadership: [{ name: "Fixture Skipper", role: "Skipper" }],
+			},
+			{ players: [{ year: "Jr" }] },
+			{ scheduleValue: { events: [{ location: "Field" }] } }
+		);
+		assertFails(result, /practices\[0\]\.when/);
+		assertFails(result, /practices\[0\]\.where/);
+		assertFails(result, /practices\[1\]/);
+		assertFails(result, /leadership\[0\]\.role/);
+		assertFails(result, /players\[0\]\.name/);
+		assertFails(result, /events\[0\]\.name/);
+	});
+
+	it("still rejects a missing or blank team introduction", () => {
+		assertFails(withFixture({}, {}), /src\/_data\/team\.json: intro — Missing field/);
+		assertFails(
+			withFixture({ intro: "  " }, {}),
+			/src\/_data\/team\.json: intro — This field is required and cannot be blank/
 		);
 	});
 });

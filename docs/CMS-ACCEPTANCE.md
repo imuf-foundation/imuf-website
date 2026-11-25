@@ -1,15 +1,17 @@
 # CMS acceptance
 
-What an ordinary editor can change, what was proven on this computer, and what still needs hosted Pages CMS. A local JSON edit is not a hosted CMS test. No hosted test was performed. GitHub, Netlify, and Pages CMS are not connected.
+What an ordinary editor can change, what was proven on this computer, and what a hosted Pages CMS save has shown. A local JSON edit is not a hosted CMS test.
 
 Checked on November 24, 2026. Labeled fixtures were removed and the original `pages.json`, `history.json`, and `videos.json` bytes were restored. The nine launch pages then matched the saved HTML baseline byte for byte.
+
+Later the same day, hosted Pages CMS read, saved, refreshed, and restored Team Information through GitHub. Commit `fa1dd4f` added `IMUF CMS CONNECTION TEST` to `intro`. Commit `6ff2f56` removed that sentence and restored the introduction: Information for current and prospective Indiana men's ultimate players. Both commits are by d11woods and are marked `(via Pages CMS)`. Netlify deployment and automatic rebuild were not part of this check and remain untested.
 
 ## Editable content
 
 | Content | Source file | CMS field | Consuming template | Local test | Hosted test | Remaining issue |
 | --- | --- | --- | --- | --- | --- | --- |
-| Team introduction, join text, recruiting email, practices, leadership | `src/_data/team.json` | Team Information | `src/team/index.njk` | Passed earlier for the introduction and one practice. Restored. | Not performed | Recruiting text and practice details are still blank. |
-| Roster and schedule | `src/_data/roster.json`, `src/_data/schedule.json` | Roster, Season Schedule | `src/team/roster.njk`, `src/team/schedule.njk` | Schema matches. Records stay empty. | Not performed | Deferred from the nine-page launch. |
+| Team introduction, join text, recruiting email, practices, leadership | `src/_data/team.json` | Team Information | `src/team/index.njk` | Passed earlier for the introduction and one practice. Restored. | Read, save, refresh, and restoration passed. `fa1dd4f` added the connection-test sentence; `6ff2f56` removed it. | Recruiting text, practices, and leadership are still blank. Pages CMS omits those empty fields. |
+| Roster and schedule | `src/_data/roster.json`, `src/_data/schedule.json` | Roster, Season Schedule | `src/team/roster.njk`, `src/team/schedule.njk` | Schema matches. Records stay empty. An omitted empty list is valid. | Not performed | Deferred from the nine-page launch. |
 | Board records | `src/_data/board.json` | IMUF Board | `src/imuf-board/index.njk` | Passed earlier for one labeled member. Restored. | Not performed | Published roles are unconfirmed. |
 | Shared addresses | `src/_data/site.json` `urls` | Site settings → Shared addresses | Header, footer, and links that use `urlKey` | Existing addresses render. An unsafe store URL is rejected by validation. | Not performed | `site.nav` is kept so a save does not delete it. It is not the header. |
 | Page routes, including foundation contact, donation destination, newsletter archive, and video archive | `src/_data/pages.json` `routes` | Pages → Page routes | Header, footer, homepage, contact, donate, newsletters, videos | Passed. The donation address was temporarily `https://example.com/imuf-cms-local-test` and then restored. | Not performed | These are the only copies of those addresses. |
@@ -45,6 +47,12 @@ Validation passed. The content tests passed, including the new boundaries for re
 
 Labeled fixtures rendered on the pages that consume them. Original content was restored. All nine launch pages matched `/Users/davidwoods/Documents/IMUF-Backups/imuf-launch-html-20261124-215239`.
 
+The restored `src/_data/team.json` is the three-line introduction and has no trailing newline. Pages CMS omitted the empty optional fields `joinText`, `recruitingEmail`, `updatedOn`, `practices`, and `leadership`. Validation accepts that file. The regression tests also pass when those optional strings and arrays are omitted. They still fail when a present field has the wrong type, when a present array contains an invalid record, and when `intro` or a required record field is missing or blank. Optional strings may still be null or empty. Omitted arrays are treated as empty; null is not accepted for an array. `npm run validate` passed. `node --test scripts/validate-content.test.mjs` passed 51 tests. `npm run build` wrote `_site/team/index.html` with the restored introduction and without `IMUF CMS CONNECTION TEST`.
+
+A separate build of `0d4a0d2` was made outside this checkout. These nine pages matched that build byte for byte: `index.html`, `team/index.html`, `about-imuf/index.html`, `imuf-board/index.html`, `contact-us/index.html`, `donate-now/index.html`, `history/index.html`, `videos/index.html`, and `newsletters/index.html`. The Team Hub empty states are unchanged.
+
+Roster `players` and schedule `events` are empty lists in the same CMS shape, so validation accepts them when a save omits them. Their templates already treat a missing list like an empty one. Video groups, board members, history chapters, site navigation, and the page lists contain records. A save keeps those arrays, and validation still requires them. Optional strings on the other forms already accepted a missing value.
+
 ## Images
 
 | Question | What is true now |
@@ -57,6 +65,8 @@ Labeled fixtures rendered on the pages that consume them. Original content was r
 
 | Step | Result | Evidence |
 | --- | --- | --- |
-| A–H | Not performed | No IMUF GitHub repository, Pages CMS project, or Netlify review site is connected. |
+| GitHub read, save, refresh, and restoration | Passed for Team Information | `fa1dd4f` added `IMUF CMS CONNECTION TEST` to the introduction. `6ff2f56` removed it and restored the previous sentence. Both commits are `Update src/_data/team.json (via Pages CMS)` by d11woods. |
+| Empty optional fields | Pages CMS omits them | That save dropped blank `joinText`, `recruitingEmail`, `updatedOn`, `practices`, and `leadership`. Validation treats the omissions as empty. The rendered Team Hub page matches the build from `0d4a0d2`. |
+| Netlify deployment and automatic rebuild | Not tested | This check did not deploy the site or confirm that a GitHub push rebuilds on Netlify. |
 
 A second person has not used the editor.
