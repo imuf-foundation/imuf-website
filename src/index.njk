@@ -20,14 +20,14 @@ bodyClass: home-page
 <section class="ed-recruit" aria-labelledby="ed-recruit-title">
   <div class="ed-recruit-shell">
     <figure class="ed-lucas"><img src="/assets/images/lucas-editorial-v3-1536.webp" srcset="/assets/images/lucas-editorial-v3-640.webp 640w, /assets/images/lucas-editorial-v3-960.webp 960w, /assets/images/lucas-editorial-v3-1536.webp 1536w" sizes="(max-width: 900px) 100vw, 64vw" width="1536" height="1024" alt="Lucas celebrating with arms spread and the disc held high, in a monochrome motion treatment" loading="lazy" decoding="async"></figure>
-    <div class="ed-recruit-intro"><h2 id="ed-recruit-title"><span>{{ pages.home.recruitLead | plain | safe }}</span>{{ pages.home.recruitTitle | plain | safe }}</h2><div class="ed-recruit-actions"><a class="ed-link" href="{{ pages.home.recruitJoin | linkHref(site.urls, pages.routes) }}">{{ pages.home.recruitJoin.label | plain | safe }}</a><a class="ed-link ed-link-secondary" href="{{ pages.home.recruitNew | linkHref(site.urls, pages.routes) }}">{{ pages.home.recruitNew.label | plain | safe }}</a></div></div>
+    <div class="ed-recruit-intro"><h2 id="ed-recruit-title"><span>{{ pages.home.recruitLead | plain | safe }}</span>{{ pages.home.recruitTitle | plain | safe }}</h2><div class="ed-recruit-actions"><a class="ed-link" href="{{ pages.home.recruitJoin | linkHref(site.urls, pages.routes) }}">{{ pages.home.recruitJoin.label | plain | safe }}</a></div></div>
   </div>
 </section>
 
 <section class="ed-hub" aria-labelledby="ed-hub-title">
   <div class="ed-hub-main">
     <div class="ed-hub-copy"><h2 id="ed-hub-title">{{ pages.home.hubLine1 | plain | safe }}<br>{{ pages.home.hubLine2 | plain | safe }}</h2><a class="ed-link ed-link-light ed-hub-entry" href="{{ pages.home.hubEntry | linkHref(site.urls, pages.routes) }}">{{ pages.home.hubEntry.label | plain | safe }}</a>
-      <nav class="ed-hub-nav" aria-label="{{ pages.home.hubNavLabel | plain | safe }}">{%- for link in pages.home.hubLinks -%}<a href="{{ link | linkHref(site.urls, pages.routes) }}">{{ link.label | plain | safe }}</a>{%- endfor -%}</nav>
+      {%- if pages.home.hubLinks.length -%}<nav class="ed-hub-nav" aria-label="{{ pages.home.hubNavLabel | plain | safe }}">{%- for link in pages.home.hubLinks -%}<a href="{{ link | linkHref(site.urls, pages.routes) }}">{{ link.label | plain | safe }}</a>{%- endfor -%}</nav>{%- endif -%}
     </div>
     <figure class="ed-hub-art"><img class="ed-steppa" src="/assets/images/steppa-editorial-v2-1122.webp" srcset="/assets/images/steppa-editorial-v2-640.webp 640w, /assets/images/steppa-editorial-v2-960.webp 960w, /assets/images/steppa-editorial-v2-1122.webp 1122w" sizes="(max-width: 900px) 100vw, 58vw" width="1122" height="1402" alt="Steppa reaching for the disc in his red number 2 jersey against a monochrome field" loading="lazy" decoding="async"></figure>
   </div>

@@ -34,22 +34,6 @@
           {
             "label": "Team Hub",
             "urlKey": "team"
-          },
-          {
-            "label": "Join the Team",
-            "urlKey": "join"
-          },
-          {
-            "label": "Mama's Roster",
-            "urlKey": "roster"
-          },
-          {
-            "label": "Season Schedule",
-            "route": "schedule"
-          },
-          {
-            "label": "Player Resources",
-            "route": "resources"
           }
         ]
       },
@@ -72,25 +56,15 @@
         ]
       },
       {
-        "id": "scholarships",
-        "label": "Scholarships",
-        "links": [
-          {
-            "label": "Mike Moore Scholarship",
-            "route": "scholarship"
-          }
-        ]
-      },
-      {
         "id": "about",
         "label": "About IMUF",
         "links": [
           {
-            "label": "The Foundation",
+            "label": "About IMUF",
             "route": "about"
           },
           {
-            "label": "The Board",
+            "label": "IMUF Board",
             "route": "board"
           },
           {
@@ -145,10 +119,6 @@
       "label": "Join the team",
       "urlKey": "join"
     },
-    "recruitNew": {
-      "label": "New to ultimate?",
-      "route": "resourcesBasics"
-    },
     "hubLine1": "Your team.",
     "hubLine2": "All here.",
     "hubEntry": {
@@ -156,24 +126,7 @@
       "urlKey": "team"
     },
     "hubNavLabel": "Team resources",
-    "hubLinks": [
-      {
-        "label": "Mama's Roster",
-        "urlKey": "roster"
-      },
-      {
-        "label": "Season Schedule",
-        "route": "schedule"
-      },
-      {
-        "label": "Player Resources",
-        "route": "resources"
-      },
-      {
-        "label": "Practices & Leadership",
-        "route": "practices"
-      }
-    ],
+    "hubLinks": [],
     "foundationTitle": "More than a season.",
     "foundationParagraphs": [
       "For everyone who has worn the jersey. And everyone who helps the next team take the field.",
@@ -188,10 +141,6 @@
       {
         "label": "Team history",
         "route": "history"
-      },
-      {
-        "label": "Mike Moore Scholarship",
-        "route": "scholarship"
       }
     ],
     "foundationDonate": "Support the team",

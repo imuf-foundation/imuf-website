@@ -39,9 +39,9 @@ body{font-size:18px}
 .header-editorial .wordmark img{height:36px;width:auto}
 .header-editorial .category-nav{display:flex;flex-direction:row;flex-wrap:nowrap;align-items:stretch;justify-content:space-between;gap:8px;grid-column:1/-1;width:100%;margin:0;padding:0;border:0;border-top:1px solid rgba(255,255,255,.18);font-family:var(--body);font-size:13px;font-weight:500;position:relative}
 .header-editorial .nav-group{position:static;display:flex;align-items:stretch;min-width:0}
-.category-nav summary{display:flex;align-items:center;justify-content:center;box-sizing:border-box;min-height:44px;height:100%;padding:8px 8px;border:0;white-space:nowrap;font-family:var(--body);font-size:13px;font-weight:500;line-height:1.2;gap:0}
+.category-nav summary,.category-nav .nav-link{display:flex;align-items:center;justify-content:center;box-sizing:border-box;min-height:44px;height:100%;padding:8px 8px;border:0;white-space:nowrap;font-family:var(--body);font-size:13px;font-weight:500;line-height:1.2;gap:0}
 .category-nav summary::-webkit-details-marker{display:none}
-.category-nav summary.is-active,.category-nav details[open]>summary{color:#fff;text-decoration:underline;text-underline-offset:6px}
+.category-nav summary.is-active,.category-nav .nav-link.is-active,.category-nav details[open]>summary{color:#fff;text-decoration:underline;text-underline-offset:6px}
 .category-nav .nav-dropdown,.category-nav .nav-group:last-child .nav-dropdown{display:none;position:absolute;top:100%;left:0;right:0;width:100%;min-width:0;margin:0;padding:12px;background:#141515;color:#f6f6f3;border:1px solid rgba(255,255,255,.18);box-shadow:none;z-index:90;box-sizing:border-box}
 .category-nav .nav-group[open]>.nav-dropdown{display:block}
 .category-nav .nav-dropdown a{font-family:var(--body);font-size:16px;font-weight:500;min-height:44px;display:flex;align-items:center;white-space:normal;padding:10px 12px;box-sizing:border-box}
@@ -614,13 +614,13 @@ body{font-size:18px}
 
 /* Shared header. The same rules apply on every content route. */
 @media screen and (max-width:390px) {
-  .category-nav summary {
+  .category-nav summary, .category-nav .nav-link {
     font-size: 12px;
     padding-inline: 6px;
   }
 }
 @media screen and (max-width:320px) {
-  .category-nav summary {
+  .category-nav summary, .category-nav .nav-link {
     font-size: 11px;
     padding-inline: 4px;
   }
@@ -671,7 +671,7 @@ body{font-size:18px}
   .header-editorial .nav-group {
     position: relative;
   }
-  .category-nav summary {
+  .category-nav summary, .category-nav .nav-link {
     font-size: 16px;
     padding-inline: 0;
   }
@@ -723,7 +723,7 @@ body{font-size:18px}
     gap: 28px;
     font-size: 18px;
   }
-  .category-nav summary {
+  .category-nav summary, .category-nav .nav-link {
     font-size: 18px;
   }
   .header-donate {

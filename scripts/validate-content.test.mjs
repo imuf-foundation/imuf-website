@@ -767,6 +767,19 @@ describe("launch page content", () => {
 		assert.equal(result.ok, true, result.errors.join("\n"));
 	});
 
+	it("allows an omitted recruit link and an empty homepage team-link list", () => {
+		const pages = structuredClone(FIXTURE_PAGES);
+		delete pages.home.recruitNew;
+		pages.home.hubLinks = [];
+		pages.navigation.groups = pages.navigation.groups.map((group) => (
+			group.id === "team"
+				? { ...group, links: [fixtureLink("Team Hub", { urlKey: "team" })] }
+				: group
+		));
+		const result = withFixture(EMPTY_TEAM, EMPTY_ROSTER, { pagesValue: pages });
+		assert.equal(result.ok, true, result.errors.join("\n"));
+	});
+
 	it("rejects a missing pages file", () => {
 		assertFails(withFixture(EMPTY_TEAM, EMPTY_ROSTER, { omitPages: true }), /src\/_data\/pages\.json: \(file\)/);
 	});

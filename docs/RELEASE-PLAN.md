@@ -42,20 +42,21 @@ Roster, schedule, and practice records stay empty until the team supplies them. 
 
 December 8–12 work is not authorized until David directs the domain change and Squarespace cancellation separately.
 
-## Proposed launch navigation
+## Launch navigation
 
-Not implemented in this milestone. The current header still includes roster, schedule, player resources, and the scholarship.
+Applied. Labels, destinations, and order stay in `pages.navigation` so Pages CMS can edit them. A group with one link renders as a direct header link. Team is that case. Donate stays the header action to `/donate-now/`.
 
 | Group | Launch links |
 | --- | --- |
-| Team | Team Hub; Join the Team |
-| Alumni & History | Team History; Video Archive; Newsletters |
-| About IMUF | About IMUF; IMUF Board; Contact |
-| Donate | Donate |
+| Team | Team Hub → `/team/` |
+| Alumni & History | Team History → `/history/`; Video Archive → `/videos/`; Newsletters → `/newsletters/` |
+| About IMUF | About IMUF → `/about-imuf/`; IMUF Board → `/imuf-board/`; Contact → `/contact-us/` |
+| Donate | Donate → `/donate-now/` |
+
+The homepage, shared header, both footers, and Team Hub no longer link to `/team/roster/`, `/team/schedule/`, `/team/player-resources/`, or `/scholarships/mike-moore/`. The homepage no longer links to the empty practices section. Team Hub still shows its practices, leadership, and recruiting notices. Deferred source pages, their CMS forms, and the route keys they use remain in the build. This pass does not add redirects.
 
 ## Pending before production, not part of this CMS milestone
 
-- Remove homepage links that point at deferred pages, including roster, schedule, the full player-resources set, practices that have no records, and the scholarship.
 - Exclude the deferred routes from the production build.
 - Keep `noindex` until the launch review explicitly allows indexing.
 - Keep newsletter signup inactive until an approved form exists. The public archive link may remain.
@@ -67,8 +68,8 @@ Not implemented in this milestone. The current header still includes roster, sch
 | --- | --- |
 | Board roles | Eleven published names, roles, and class years are in `src/_data/board.json`. Whether each role is still current is unconfirmed. |
 | Recruiting instructions and contact | `joinText` and `recruitingEmail` in `src/_data/team.json` are blank. |
-| Foundation contact | `/contact-us/` links to `https://www.hoosiermamas.org/contact-us/`. No replacement address is approved. |
-| Donation destination and copy | `/donate-now/` links to `https://www.hoosiermamas.org/donate-now`. The Venmo account in the build brief is not confirmed for this release. |
+| Foundation contact | Unresolved cutover blocker. The Contact button still goes to `https://www.hoosiermamas.org/contact-us/`. After `hoosiermamas.org` points at this site, that address is this site’s own `/contact-us/` page, so the button would link to the page it is already on. No replacement address is approved. This pass did not change the URL. |
+| Donation destination and copy | Unresolved cutover blocker. The Donate button still goes to `https://www.hoosiermamas.org/donate-now`. After `hoosiermamas.org` points at this site, that address is this site’s own `/donate-now/` page, so the button would link to the page it is already on. The Venmo account in the build brief is not confirmed for this release. This pass did not change the URL. |
 | Newsletter integration | Signup does not submit. Past issues link to `https://maxklaben.activehosted.com/archive/1`. Account, list, and form are not supplied. |
 | Account ownership | No IMUF-owned GitHub organization or Netlify site is recorded. Do not use a personal account as the default owner. |
 | Ongoing editor | The person who will make routine Pages CMS edits has not been named. |

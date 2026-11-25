@@ -1,6 +1,10 @@
 <header class="site-header header-categories header-editorial">
 <div class="header-brandbar"><div class="brand-pair"><a class="wordmark" href="{{ site.urls.home }}" aria-label="{{ pages.header.homeAriaLabel | plain | safe }}"><img src="/assets/images/mamas-white.webp" width="38" height="52" alt=""><span>{{ pages.header.wordmarkLine1 | plain | safe }}<span>{{ pages.header.wordmarkLine2 | plain | safe }}</span></span></a><span class="brand-slash" aria-hidden="true">/</span><a class="header-foundation" href="{{ pages.routes[pages.footer.foundationRoute] }}"><img src="/assets/images/imuf-mark.webp" width="89" height="41" alt="{{ site.organization | plain | safe }}"></a></div><nav id="site-nav" class="site-nav category-nav" aria-label="{{ pages.header.navLabel | plain | safe }}">
 {%- for group in pages.navigation.groups %}
+{%- if group.links.length == 1 -%}
+<a class="nav-link{% if group.id == 'team' and navId in ['team','roster','schedule','resources'] %} is-active{% endif %}" href="{{ group.links[0] | linkHref(site.urls, pages.routes) }}">{{ group.label | plain | safe }}</a>
+{%- else -%}
 <details class="nav-group"><summary{% if group.id == 'team' and navId in ['team','roster','schedule','resources'] %} class="is-active"{% endif %}>{{ group.label | plain | safe }}</summary><div class="nav-dropdown">{%- for link in group.links -%}<a href="{{ link | linkHref(site.urls, pages.routes) }}">{{ link.label | plain | safe }}</a>{%- endfor -%}</div></details>
+{%- endif -%}
 {%- endfor %}
 </nav><div class="header-actions"><a class="header-donate" href="{{ site.urls.donate }}">{{ pages.header.donateLabel | plain | safe }}</a></div></div></header>

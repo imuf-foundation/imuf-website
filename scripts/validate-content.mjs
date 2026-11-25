@@ -815,7 +815,9 @@ export function validateContent(projectRoot = defaultRoot) {
 		validateLink(file, "home.heroJoin", data.home?.heroJoin, data.routes);
 		validateLink(file, "home.heroHub", data.home?.heroHub, data.routes);
 		validateLink(file, "home.recruitJoin", data.home?.recruitJoin, data.routes);
-		validateLink(file, "home.recruitNew", data.home?.recruitNew, data.routes);
+		if (data.home?.recruitNew != null) {
+			validateLink(file, "home.recruitNew", data.home.recruitNew, data.routes);
+		}
 		validateLink(file, "home.hubEntry", data.home?.hubEntry, data.routes);
 		validateLink(file, "home.archiveAction", data.home?.archiveAction, data.routes);
 		validateLink(file, "contact.foundationButton", data.contact?.foundationButton, data.routes);
